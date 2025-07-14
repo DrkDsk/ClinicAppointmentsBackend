@@ -2,13 +2,11 @@
 
 namespace App\Models;
 
-use App\Classes\Role;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class Doctor extends User
+class Doctor extends Model
 {
-    protected static function booted() {
-        static::addGlobalScope(Role::DOCTOR, function ($query) {
-            $query->where('role', Role::DOCTOR);
-        });
-    }
+    use HasFactory;
+    protected $filable = ['user_id', 'specialty', 'birthday'];
 }
