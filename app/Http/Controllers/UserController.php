@@ -3,22 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateUserRequest;
+use App\Http\Resources\UserResource;
+use App\UseCases\CreateUserUseCase;
+use App\UseCases\DTOs\CreateUserDTO;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
-use App\Classes\Role as RoleClass;
 
 class UserController extends Controller
 {
+
+    public function __construct(private CreateUserUseCase $createUserUseCase) {}
+
     public function get(Request $request) {
         $user = $request->user();
-        $adminRole = Role::findByName(RoleClass::ADMIN);
 
-        $user->assignRole($adminRole);
-        $userRoles = $user->roles; 
+        return new UserResource($user);
+    }
 
-        return response()->json([
-            'user' => $user,
-            'roles' => $userRoles
-        ]);
+    public function create(CreateUserRequest $request): UserResource {
+        $dto = new CreateUserDTO(
+            $request->get('name'),
+            $request->get('email'),
+            $request->get('password'),
+            $request->get('roles')
+        );
+
+        return $this->createUserUseCase->handle($dto);
     }
 }
