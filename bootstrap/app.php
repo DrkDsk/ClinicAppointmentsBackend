@@ -17,12 +17,16 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->statefulApi();
 
-         $middleware->alias([
+        $middleware->alias([
             'role' => RoleMiddleware::class,
             'permission' => PermissionMiddleware::class,
             'role_or_permission' => RoleOrPermissionMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        $exceptions->render(function (App\Exceptions\EmailAlreadyExistsException $e, $request) {
+            return response()->json([
+                'error' => $e->getMessage()
+            ], $e->getCode() ?: 409);
+        });
     })->create();
