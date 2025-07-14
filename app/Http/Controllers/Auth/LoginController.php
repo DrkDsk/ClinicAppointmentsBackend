@@ -4,21 +4,24 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
-use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
     public function login(LoginRequest $request)
     {
-        if (!Auth::attempt($request->only("email", "password"))) {
-            return response()->json([
-                'message' => 'Unauthorized'
-            ], 401);
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            throw ValidationException::withMessages([
+                'email' => ['The provided credentials are incorrect.'],
+            ]);
         }
 
         return response()->json([
-            'token' => $request->user()->createToken($request->get('device'))->plainTextToken,
-            'message' => 'success'
+            'token' => $user->createToken($request->device)->plainTextToken
         ]);
     }
 }
