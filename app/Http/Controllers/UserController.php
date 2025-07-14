@@ -13,8 +13,6 @@ class UserController extends Controller
         $user = $request->user();
         $adminRole = Role::findByName(RoleClass::ADMIN);
 
-        return "hola";
-
         $user->assignRole($adminRole);
         $userRoles = $user->roles; 
 
