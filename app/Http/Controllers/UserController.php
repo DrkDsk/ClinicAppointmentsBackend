@@ -6,7 +6,7 @@ use App\Classes\DTOs\CreateUserDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Resources\UserResource;
-use App\Services\UserService;
+use App\Infrastructure\Services\User\UserService;
 use Illuminate\Http\Request;
 
 class UserController extends Controller

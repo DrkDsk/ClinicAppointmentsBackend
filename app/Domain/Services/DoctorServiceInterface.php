@@ -1,12 +1,10 @@
 <?php
-
-namespace App\Domain\Repositories;
+namespace App\Domain\Services;
 
 use App\Classes\DTOs\Doctor\CreateDoctorDTO;
 use App\Models\Doctor;
 
-interface DoctorRepository
+interface DoctorServiceInterface
 {
     public function create(CreateDoctorDTO $dto): Doctor;
-    public function existsByUser(string $userId): bool;
 }
