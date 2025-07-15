@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\PatientController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -10,8 +11,12 @@ Route::prefix('users/admin')
     ->middleware(['auth:sanctum', 'role:admin'])->group(function () {
         Route::post('create', [UserController::class, 'store']);
 
-        Route::prefix('doctor')->group(function () {
+        Route::prefix('doctors')->group(function () {
             Route::post('create/{user}', [DoctorController::class, 'store']);
+        });
+
+        Route::prefix('patients')->group(function () {
+            Route::post('create/{user?}', [PatientController::class, 'store']);
         });
     });
 

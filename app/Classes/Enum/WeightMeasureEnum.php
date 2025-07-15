@@ -2,7 +2,7 @@
 
 namespace App\Classes\Enum;
 
-enum WeightMeasureEnum
+enum WeightMeasureEnum: string
 {
     case KILOGRAM = 'KG';
     case POUND = 'LB';

@@ -16,7 +16,7 @@ class DoctorService implements DoctorServiceInterface
 
     public function create(CreateDoctorDTO $dto): Doctor
     {
-        if ($this->repository->existsByEmail($dto->userId)) {
+        if ($this->repository->existsByUser($dto->userId)) {
             throw new ModelAlreadyExistsException("El modelo:" . Doctor::class . " ya está relacionado con el email: '$dto->userEmail'");
         }
 

@@ -10,6 +10,7 @@ class CreatePatientDTO
 {
     public function __construct(
         public readonly ?int $userId = null,
+        public readonly ?string $userEmail = null,
         public readonly Carbon $birthday,
         public readonly string $phoneNumber,
         public readonly float $weight,
