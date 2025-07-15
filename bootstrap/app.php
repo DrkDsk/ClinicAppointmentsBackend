@@ -24,7 +24,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        $exceptions->render(function (App\Exceptions\EmailAlreadyExistsException $e, $request) {
+        $exceptions->render(function (App\Exceptions\ModelAlreadyExistsException $e, $request) {
             return response()->json([
                 'error' => $e->getMessage()
             ], $e->getCode() ?: 409);
