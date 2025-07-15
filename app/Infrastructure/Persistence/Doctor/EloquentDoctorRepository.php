@@ -16,8 +16,8 @@ class EloquentDoctorRepository implements DoctorRepository
         ]);
     }
 
-    public function existsByEmail(string $email): bool
+    public function existsByEmail(string $userId): bool
     {
-        return Doctor::where("email", $email)->exists();
+        return Doctor::where("user_id", $userId)->exists();
     }
 }

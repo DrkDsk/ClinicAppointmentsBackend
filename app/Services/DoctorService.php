@@ -3,10 +3,9 @@
 namespace App\Services;
 
 use App\Classes\DTOs\Doctor\CreateDoctorDTO;
-use App\Exceptions\EmailAlreadyExistsException;
+use App\Exceptions\ModelAlreadyExistsException;
 use App\Infrastructure\Persistence\Doctor\EloquentDoctorRepository;
 use App\Models\Doctor;
-
 
 class DoctorService
 {
@@ -16,8 +15,8 @@ class DoctorService
 
     public function create(CreateDoctorDTO $dto): Doctor
     {
-        if ($this->repository->existsByEmail($dto->userEmail)) {
-            throw new EmailAlreadyExistsException($dto->userEmail);
+        if ($this->repository->existsByEmail($dto->userId)) {
+            throw new ModelAlreadyExistsException("El modelo:" . Doctor::class . " ya está relacionado con el email: '$dto->userEmail'");
         }
 
         return $this->repository->create($dto);

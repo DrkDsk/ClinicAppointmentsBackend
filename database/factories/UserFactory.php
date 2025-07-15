@@ -32,7 +32,6 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
-            'role' => fake()->randomElement(RoleClass::all())
         ];
     }
 
@@ -49,13 +48,18 @@ class UserFactory extends Factory
     public function configure(): static
     {
         return $this->afterCreating(function ($user) {
-            if ($user->role === RoleClass::PATIENT) {
+
+            $role = fake()->randomElement(RoleClass::all());
+            $user->assignRole($role);
+            $user->save();
+
+            if ($role === RoleClass::PATIENT) {
                 Patient::factory()->create([
                     'user_id' => $user->id,
                 ]);
             }
 
-            if ($user->role === RoleClass::DOCTOR) {
+            if ($role === RoleClass::DOCTOR) {
                 Doctor::factory()->create([
                     'user_id' => $user->id,
                 ]);

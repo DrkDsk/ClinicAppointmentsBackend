@@ -1,8 +1,9 @@
-<?php 
+<?php
 
 namespace App\Classes;
 
-final class Specialty {
+final class Specialty
+{
 
     public const GENERAL_DENTISTRY = 'Odontología general';
     public const ORTHODONTICS = 'Ortodoncia';

@@ -19,14 +19,11 @@ class DoctorController extends Controller
     public function store(CreateDoctorRequest $request, User $user)
     {
         $dto = new CreateDoctorDTO(
-            $user->id,
-            $user->email,
-            Carbon::parse($request['birthday']),
-            $request['specialty']
+            userId: $user->id,
+            userEmail: $user->email,
+            birthday: Carbon::parse($request['birthday']),
+            specialty: $request['specialty']
         );
-
-        return $dto;
-
 
         $doctor = $this->service->create($dto);
 
