@@ -10,9 +10,8 @@ Route::prefix('users/admin')
     ->middleware(['auth:sanctum', 'role:admin'])->group(function () {
         Route::post('create', [UserController::class, 'store']);
 
-
         Route::prefix('doctor')->group(function () {
-            Route::post('create/{user_id}', [DoctorController::class, 'store']);
+            Route::post('create/{user}', [DoctorController::class, 'store']);
         });
     });
 
