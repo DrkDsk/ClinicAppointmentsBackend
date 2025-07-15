@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->date('birthday');
             $table->string('phone_number');
+            $table->integer('weight')->nullable();
+            $table->integer('height')->nullable();
             $table->timestamps();
         });
     }

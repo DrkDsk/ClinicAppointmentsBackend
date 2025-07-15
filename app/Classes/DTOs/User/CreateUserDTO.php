@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\UseCases\DTOs;
+namespace App\Classes\DTOs;
 
 class CreateUserDTO {
 

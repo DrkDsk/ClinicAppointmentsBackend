@@ -12,7 +12,7 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-         Permission::create(['name' => 'view appointments']);
+        Permission::create(['name' => 'view appointments']);
         Permission::create(['name' => 'edit appointments']);
         Permission::create(['name' => 'delete appointments']);
         Permission::create(['name' => 'manage users']);

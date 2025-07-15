@@ -2,9 +2,11 @@
 
 namespace App\Domain\Repositories;
 
+use App\Classes\DTOs\CreateUserDTO;
 use App\Models\User;
-use App\UseCases\DTOs\CreateUserDTO;
 
-interface UserRepository {
-    public function create(CreateUserDTO $dto) : User; 
+interface UserRepository
+{
+    public function store(CreateUserDTO $dto): User;
+    public function existsByEmail(string $email): bool;
 }
