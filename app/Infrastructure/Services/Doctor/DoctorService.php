@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Services;
+namespace App\Infrastructure\Services\Doctor;
 
 use App\Classes\DTOs\Doctor\CreateDoctorDTO;
+use App\Domain\Services\DoctorServiceInterface;
 use App\Exceptions\ModelAlreadyExistsException;
 use App\Infrastructure\Persistence\Doctor\EloquentDoctorRepository;
 use App\Models\Doctor;
 
-class DoctorService
+class DoctorService implements DoctorServiceInterface
 {
     public function __construct(private readonly EloquentDoctorRepository $repository)
     {
@@ -21,6 +22,5 @@ class DoctorService
 
         return $this->repository->create($dto);
     }
-
 }
 

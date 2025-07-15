@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Classes\DTOs\Doctor\CreateDoctorDTO;
 use App\Http\Requests\CreateDoctorRequest;
 use App\Http\Resources\DoctorResource;
+use App\Infrastructure\Services\Doctor\DoctorService;
 use App\Models\User;
-use App\Services\DoctorService;
 use Carbon\Carbon;
 
 class DoctorController extends Controller

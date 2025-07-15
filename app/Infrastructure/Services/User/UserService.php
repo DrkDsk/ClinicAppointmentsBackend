@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Services;
+namespace App\Infrastructure\Services\User;
 
 use App\Classes\DTOs\CreateUserDTO;
+use App\Domain\Services\UserServiceInterface;
 use App\Exceptions\ModelAlreadyExistsException;
 use App\Http\Resources\UserResource;
 use App\Infrastructure\Persistence\User\EloquentUserRepository;
 use App\Models\User;
 
-class UserService
+class UserService implements UserServiceInterface
 {
-
     public function __construct(private readonly EloquentUserRepository $repository)
     {
     }

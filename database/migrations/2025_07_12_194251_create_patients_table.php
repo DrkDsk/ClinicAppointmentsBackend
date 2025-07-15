@@ -1,11 +1,13 @@
 <?php
 
+use App\Classes\BodyMeasures;
+use App\Classes\Enum\HeightMeasureEnum;
+use App\Classes\Enum\WeightMeasureEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -13,11 +15,13 @@ return new class extends Migration
     {
         Schema::create('patients', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->date('birthday');
             $table->string('phone_number');
-            $table->integer('weight')->nullable();
-            $table->integer('height')->nullable();
+            $table->decimal('height', 4, 2)->nullable();
+            $table->decimal('weight', 5, 2)->nullable();
+            $table->enum('height_measure_type', BodyMeasures::heightMeasureTypes())->default(HeightMeasureEnum::CENTIMETER->value);
+            $table->enum('weight_measure_type', BodyMeasures::weightMeasureTypes())->default(WeightMeasureEnum::KILOGRAM->value);
             $table->timestamps();
         });
     }
