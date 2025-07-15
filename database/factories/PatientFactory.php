@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Classes\Enum\HeightMeasureEnum;
+use App\Classes\Enum\WeightMeasureEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,11 +18,18 @@ class PatientFactory extends Factory
      */
     public function definition(): array
     {
+        $height = fake()->optional()->randomFloat(2, 30, 99.99);
+        $heightType = $height !== null ? HeightMeasureEnum::CENTIMETER : null;
+        $weight = fake()->optional()->randomFloat(2, 30, 99.99);
+        $weightType = $weight !== null ? WeightMeasureEnum::KILOGRAM : null;
+
         return [
             'birthday' => $this->faker->date('Y-m-d', '2005-01-01'),
             'phone_number' => $this->faker->phoneNumber(),
-            'weight' => $this->faker->optional()->numberBetween(40, 120),
-            'height' => $this->faker->optional()->numberBetween(140, 210),
+            'height' => $height,
+            'height_measure_type' => $heightType,
+            'weight' => $weight,
+            'weight_measure_type' => $weightType,
         ];
     }
 }
