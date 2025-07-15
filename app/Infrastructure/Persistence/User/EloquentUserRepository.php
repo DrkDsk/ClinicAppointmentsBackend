@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Infrastructure\Persistence;
+namespace App\Infrastructure\Persistence\User;
 
+use App\Classes\DTOs\CreateUserDTO;
 use App\Domain\Repositories\UserRepository;
 use App\Models\User;
-use App\UseCases\DTOs\CreateUserDTO;
 
 class EloquentUserRepository implements UserRepository
 {
-
-    public function create(CreateUserDTO $dto): User
+    public function store(CreateUserDTO $dto): User
     {
         return User::create([
             'name' => $dto->name,

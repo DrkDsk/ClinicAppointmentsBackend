@@ -2,24 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\DTOs\CreateUserDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Resources\UserResource;
-use App\UseCases\CreateUserUseCase;
-use App\UseCases\DTOs\CreateUserDTO;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function __construct(private CreateUserUseCase $createUserUseCase) {}
+    public function __construct(private readonly UserService $service)
+    {
+    }
 
-    public function get(Request $request) {
+    public function get(Request $request)
+    {
         $user = $request->user();
 
         return new UserResource($user);
     }
 
-    public function create(CreateUserRequest $request): UserResource {
+    public function store(CreateUserRequest $request): UserResource
+    {
         $dto = new CreateUserDTO(
             $request->get('name'),
             $request->get('email'),
@@ -27,6 +31,6 @@ class UserController extends Controller
             $request->get('roles')
         );
 
-        return $this->createUserUseCase->handle($dto);
+        return $this->service->store($dto);
     }
 }
