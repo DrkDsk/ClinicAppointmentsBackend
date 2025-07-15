@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use App\Classes\Specialty;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class CreateDoctorRequest extends FormRequest
 {
@@ -25,8 +24,23 @@ class CreateDoctorRequest extends FormRequest
     {
         return [
             'birthday' => ['required', 'date', 'before:today'],
-            'specialty' => ['required', 'array'],
-            'specialty.*' => ['string', Rule::in(Specialty::all())]
+            'specialty' => [
+                'required',
+                'string',
+                function ($attribute, $value, $fail) {
+                    $normalized = strtolower($value);
+
+                    $match = collect(Specialty::all())->first(function ($item) use ($normalized) {
+                        return strtolower($item) === $normalized;
+                    });
+
+                    if (!$match) {
+                        $fail("La especialidad '$value' no es válida.");
+                    } else {
+                        $this->merge([$attribute => $match]);
+                    }
+                }
+            ]
         ];
     }
 }
