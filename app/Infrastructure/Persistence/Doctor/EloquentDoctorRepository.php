@@ -7,10 +7,10 @@ use App\Models\Doctor;
 
 class EloquentDoctorRepository implements DoctorRepository
 {
-    public function create(CreateDoctorDTO $dto, int $personId): Doctor
+    public function create(CreateDoctorDTO $dto): Doctor
     {
         return Doctor::create([
-            'person_id' => $personId,
+            'person_id' => $dto->person->id,
             'specialty' => $dto->specialty
         ]);
     }

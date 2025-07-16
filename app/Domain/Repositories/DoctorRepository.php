@@ -7,5 +7,5 @@ use App\Models\Doctor;
 
 interface DoctorRepository
 {
-    public function create(CreateDoctorDTO $dto, int $personId): Doctor;
+    public function create(CreateDoctorDTO $dto): Doctor;
 }

@@ -2,15 +2,16 @@
 
 namespace App\Infrastructure\Persistence\Person;
 
-use App\Classes\DTOs\Person\CreatePersonDTO;
+use App\Classes\DTOs\Person\PersonDTO;
 use App\Domain\Repositories\PersonRepository;
+use App\Models\Doctor;
 use App\Models\Patient;
 use App\Models\Person;
 use App\Models\Receptionist;
 
 class EloquentPersonRepository implements PersonRepository
 {
-    public function create(CreatePersonDTO $dto): Person
+    public function create(PersonDTO $dto): Person
     {
         return Person::create([
             'name' => $dto->name,
@@ -20,18 +21,8 @@ class EloquentPersonRepository implements PersonRepository
         ]);
     }
 
-    public function existsByEmail(string $email): bool
+    public function existsByEmail(string $email): ?Person
     {
-        $existInPerson = Person::where('email', $email)->exists();
-
-        $existInReceptionist = Receptionist::whereHas('person', function ($query) use ($email) {
-            $query->where('email', $email);
-        })->exists();
-
-        $existInPatient = Patient::whereHas('person', function ($query) use ($email) {
-            $query->where('email', $email);
-        })->exists();
-
-        return $existInPerson || $existInReceptionist || $existInPatient;
+        return Person::where('email', $email)->first();
     }
 }

@@ -2,12 +2,10 @@
 
 namespace App\Infrastructure\Services\Person;
 
-use App\Classes\DTOs\Person\CreatePersonDTO;
+use App\Classes\DTOs\Person\PersonDTO;
+use App\Classes\DTOs\Response\PersonServiceResult;
 use App\Domain\Services\PersonServiceInterface;
-use App\Exceptions\ModelAlreadyExistsException;
-use App\Http\Resources\PersonResource;
 use App\Infrastructure\Persistence\Person\EloquentPersonRepository;
-use App\Models\Person;
 
 class PersonService implements PersonServiceInterface
 {
@@ -16,14 +14,18 @@ class PersonService implements PersonServiceInterface
     {
     }
 
-    public function store(CreatePersonDTO $dto): PersonResource
+    public function store(PersonDTO $dto): PersonServiceResult
     {
-        if ($this->repository->existsByEmail($dto->email)) {
-            throw new ModelAlreadyExistsException("El modelo:" . Person::class . " ya está relacionado con el email: '$dto->email'");
+        $model = $this->repository->existsByEmail($dto->email);
+        if ($model) {
+            return new PersonServiceResult(
+                wasCreated: false,
+                model: $model
+            );
         }
 
         $person = $this->repository->create($dto);
 
-        return new PersonResource($person);
+        return new PersonServiceResult(true, model: $person);
     }
 }

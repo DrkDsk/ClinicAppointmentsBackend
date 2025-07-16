@@ -3,12 +3,12 @@
 namespace App\Infrastructure\Services\Doctor;
 
 use App\Classes\DTOs\Doctor\CreateDoctorDTO;
+use App\Classes\DTOs\Response\DoctorServiceResult;
 use App\Classes\Role;
 use App\Domain\Services\DoctorServiceInterface;
 use App\Infrastructure\Persistence\Doctor\EloquentDoctorRepository;
 use App\Infrastructure\Services\Person\PersonService;
 use App\Infrastructure\Services\User\UserService;
-use App\Models\Doctor;
 
 class DoctorService implements DoctorServiceInterface
 {
@@ -19,20 +19,28 @@ class DoctorService implements DoctorServiceInterface
     ) {
     }
 
-    public function create(CreateDoctorDTO $dto): Doctor
+    public function create(CreateDoctorDTO $dto): DoctorServiceResult
     {
-        $person = $this->personService->store($dto->person);
+        $personResult = $this->personService->store($dto->person);
+
+        if (!$personResult->wasCreated) {
+            return new DoctorServiceResult(wasCreated: false, personResult: $personResult);
+        }
 
         if ($dto->user) {
             $this->userService->store(
                 dto: $dto->user,
                 email: $dto->person->email,
-                personId: $person->id,
+                personId: $personResult->model->id,
                 role: Role::DOCTOR
             );
         }
 
-        return $this->repository->create($dto, $person->id);
+        $newDto = $dto->copyWith($dto->person->copyWith($personResult->model->id));
+
+        $doctor = $this->repository->create(dto: $newDto);
+
+        return new DoctorServiceResult(true, personResult: $personResult, model: $doctor);
     }
 }
 

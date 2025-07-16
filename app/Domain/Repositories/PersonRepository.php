@@ -2,11 +2,11 @@
 
 namespace App\Domain\Repositories;
 
-use App\Classes\DTOs\Person\CreatePersonDTO;
+use App\Classes\DTOs\Person\PersonDTO;
 use App\Models\Person;
 
 interface PersonRepository
 {
-    public function create(CreatePersonDTO $dto): Person;
-    public function existsByEmail(string $email): bool;
+    public function create(PersonDTO $dto): Person;
+    public function existsByEmail(string $email): ?Person;
 }

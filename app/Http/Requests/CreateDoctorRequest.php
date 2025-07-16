@@ -25,7 +25,7 @@ class CreateDoctorRequest extends FormRequest
         return [
             'person' => ['required', 'array'],
             'person.name' => ['required', 'string'],
-            'person.email' => ['required', 'email', 'unique:people,email'],
+            'person.email' => ['required', 'email'],
             'person.birthday' => ['required', 'date', 'before:today'],
             'person.phone' => ['required', 'digits:10'],
 
