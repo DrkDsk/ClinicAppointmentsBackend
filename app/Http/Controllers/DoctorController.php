@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Factories\CreateDoctorDTOFactory;
 use App\Http\Requests\CreateDoctorRequest;
 use App\Http\Resources\CreateDoctorResource;
-use App\Infrastructure\Services\Doctor\DoctorService;
+use App\Infrastructure\Services\DoctorService;
 
 class DoctorController extends Controller
 {

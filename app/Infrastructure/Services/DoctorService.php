@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Infrastructure\Services\Doctor;
+namespace App\Infrastructure\Services;
 
 use App\Classes\Const\Role;
 use App\Classes\DTOs\Doctor\CreateDoctorDTO;
 use App\Classes\DTOs\Response\DoctorServiceResult;
 use App\Domain\Services\DoctorServiceInterface;
 use App\Infrastructure\Persistence\EloquentDoctorRepository;
-use App\Infrastructure\Services\Person\PersonService;
-use App\Infrastructure\Services\User\UserService;
 
 class DoctorService implements DoctorServiceInterface
 {

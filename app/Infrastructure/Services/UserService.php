@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Services\User;
+namespace App\Infrastructure\Services;
 
 use App\Classes\DTOs\User\CreateUserDTO;
 use App\Domain\Services\UserServiceInterface;

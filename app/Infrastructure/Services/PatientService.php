@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Services\Patient;
+namespace App\Infrastructure\Services;
 
 use App\Classes\DTOs\Patient\CreatePatientDTO;
 use App\Domain\Services\PatientServiceInterface;

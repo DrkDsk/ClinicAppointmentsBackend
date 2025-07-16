@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Services\Person;
+namespace App\Infrastructure\Services;
 
 use App\Classes\DTOs\Person\PersonDTO;
 use App\Classes\DTOs\Response\PersonServiceResult;

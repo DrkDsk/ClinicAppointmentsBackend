@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Services\Receptionist;
+namespace App\Infrastructure\Services;
 
 use App\Classes\DTOs\Receptionist\CreateReceptionistDTO;
 use App\Domain\Services\ReceptionistServiceInterface;
