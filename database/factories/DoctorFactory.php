@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Classes\Specialty;
+use App\Classes\Const\Specialty;
 use App\Models\Doctor;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
