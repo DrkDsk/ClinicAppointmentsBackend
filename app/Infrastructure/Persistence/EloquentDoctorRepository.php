@@ -1,5 +1,6 @@
 <?php
-namespace App\Infrastructure\Persistence\Doctor;
+
+namespace App\Infrastructure\Persistence;
 
 use App\Classes\DTOs\Doctor\CreateDoctorDTO;
 use App\Domain\Repositories\DoctorRepository;
@@ -10,13 +11,8 @@ class EloquentDoctorRepository implements DoctorRepository
     public function create(CreateDoctorDTO $dto): Doctor
     {
         return Doctor::create([
-            'person_id' => $dto->personId,
+            'person_id' => $dto->person->id,
             'specialty' => $dto->specialty
         ]);
-    }
-
-    public function existsByUser(string $personId): bool
-    {
-        return Doctor::where("person_id", $personId)->exists();
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Classes\BodyMeasures;
+use App\Classes\Const\BodyMeasures;
 use App\Classes\Enum\HeightMeasureEnum;
 use App\Classes\Enum\WeightMeasureEnum;
 use Illuminate\Foundation\Http\FormRequest;

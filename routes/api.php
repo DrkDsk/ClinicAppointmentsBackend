@@ -15,7 +15,7 @@ Route::prefix('users/admin')
         });
 
         Route::prefix('doctors')->group(function () {
-            Route::post('create/{person}', [DoctorController::class, 'store']);
+            Route::post('create', [DoctorController::class, 'store']);
         });
 
         Route::prefix('receptionists')->group(function () {

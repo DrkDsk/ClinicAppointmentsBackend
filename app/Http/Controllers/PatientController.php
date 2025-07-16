@@ -6,7 +6,7 @@ use App\Classes\DTOs\Patient\CreatePatientDTO;
 use App\Classes\Enum\HeightMeasureEnum;
 use App\Classes\Enum\WeightMeasureEnum;
 use App\Http\Requests\CreatePatientRequest;
-use App\Infrastructure\Services\Patient\PatientService;
+use App\Infrastructure\Services\PatientService;
 use App\Models\User;
 use Carbon\Carbon;
 

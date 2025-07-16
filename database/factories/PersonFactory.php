@@ -7,7 +7,7 @@ use App\Models\Patient;
 use App\Models\Person;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Classes\Role as RoleClass;
+use App\Classes\Const\Role as RoleClass;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Person>

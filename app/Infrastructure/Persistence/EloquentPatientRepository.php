@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Persistence\Patient;
+namespace App\Infrastructure\Persistence;
 
 use App\Classes\DTOs\Patient\CreatePatientDTO;
 use App\Domain\Repositories\PatientRepository;
