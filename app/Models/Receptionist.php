@@ -6,7 +6,10 @@ use App\Classes\Role;
 
 class Receptionist extends User
 {
-    protected static function booted() {
+    protected $fillable = ["person_id"];
+
+    protected static function booted()
+    {
         static::addGlobalScope(Role::RECEPTIONIST, function ($query) {
             $query->where('role', Role::RECEPTIONIST);
         });

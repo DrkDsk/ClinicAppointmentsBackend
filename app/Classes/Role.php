@@ -2,7 +2,8 @@
 
 namespace App\Classes;
 
-final class Role {
+final class Role
+{
 
     public const DOCTOR = "doctor";
     public const ADMIN = "admin";

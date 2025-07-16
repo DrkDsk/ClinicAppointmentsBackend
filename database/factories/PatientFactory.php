@@ -24,8 +24,6 @@ class PatientFactory extends Factory
         $weightType = $weight !== null ? WeightMeasureEnum::KILOGRAM : null;
 
         return [
-            'birthday' => $this->faker->date('Y-m-d', '2005-01-01'),
-            'phone_number' => $this->faker->phoneNumber(),
             'height' => $height,
             'height_measure_type' => $heightType,
             'weight' => $weight,
