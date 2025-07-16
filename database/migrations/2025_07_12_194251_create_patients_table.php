@@ -15,9 +15,7 @@ return new class extends Migration {
     {
         Schema::create('patients', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
-            $table->date('birthday');
-            $table->string('phone_number');
+            $table->foreignId('person_id')->constrained('people')->onDelete('cascade');
             $table->decimal('height', total: 5, places: 2)->nullable();
             $table->decimal('weight', 5, 2)->nullable();
             $table->enum('height_measure_type', BodyMeasures::heightMeasureTypes())->default(HeightMeasureEnum::CENTIMETER->value)->nullable();

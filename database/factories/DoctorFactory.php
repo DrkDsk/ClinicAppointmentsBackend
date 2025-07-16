@@ -20,7 +20,6 @@ class DoctorFactory extends Factory
     public function definition(): array
     {
         return [
-            'birthday' => $this->faker->date('Y-m-d', '2005-01-01'),
             'specialty' => fake()->randomElement(Specialty::all())
         ];
     }

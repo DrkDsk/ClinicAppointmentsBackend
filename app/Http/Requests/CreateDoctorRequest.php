@@ -23,7 +23,6 @@ class CreateDoctorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'birthday' => ['required', 'date', 'before:today'],
             'specialty' => [
                 'required',
                 'string',

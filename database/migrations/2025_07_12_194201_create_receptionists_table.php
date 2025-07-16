@@ -12,9 +12,7 @@ return new class extends Migration {
     {
         Schema::create('receptionists', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->date('birthday');
-            $table->string('phone_number');
+            $table->foreignId('person_id')->constrained('people')->onDelete('cascade');
             $table->timestamps();
         });
     }

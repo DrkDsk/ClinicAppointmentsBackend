@@ -7,8 +7,8 @@ use Carbon\Carbon;
 class CreateDoctorDTO
 {
     public function __construct(
-        public readonly int $userId,
-        public readonly string $userEmail,
+        public readonly int $personId,
+        public readonly string $personEmail,
         public readonly Carbon $birthday,
         public readonly string $specialty
     ) {

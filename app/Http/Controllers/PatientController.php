@@ -32,6 +32,6 @@ class PatientController extends Controller
             heightMeasureEnum: $heightType
         );
 
-        return $this->service->store($dto);
+        $patient = $this->service->store($dto);
     }
 }
