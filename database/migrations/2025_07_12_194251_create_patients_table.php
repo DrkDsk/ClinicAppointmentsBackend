@@ -18,10 +18,10 @@ return new class extends Migration {
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->date('birthday');
             $table->string('phone_number');
-            $table->decimal('height', 4, 2)->nullable();
+            $table->decimal('height', total: 5, places: 2)->nullable();
             $table->decimal('weight', 5, 2)->nullable();
-            $table->enum('height_measure_type', BodyMeasures::heightMeasureTypes())->default(HeightMeasureEnum::CENTIMETER->value);
-            $table->enum('weight_measure_type', BodyMeasures::weightMeasureTypes())->default(WeightMeasureEnum::KILOGRAM->value);
+            $table->enum('height_measure_type', BodyMeasures::heightMeasureTypes())->default(HeightMeasureEnum::CENTIMETER->value)->nullable();
+            $table->enum('weight_measure_type', BodyMeasures::weightMeasureTypes())->default(WeightMeasureEnum::KILOGRAM->value)->nullable();
             $table->timestamps();
         });
     }
