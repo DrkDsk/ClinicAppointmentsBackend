@@ -7,16 +7,11 @@ use App\Models\Doctor;
 
 class EloquentDoctorRepository implements DoctorRepository
 {
-    public function create(CreateDoctorDTO $dto): Doctor
+    public function create(CreateDoctorDTO $dto, int $personId): Doctor
     {
         return Doctor::create([
-            'person_id' => $dto->personId,
+            'person_id' => $personId,
             'specialty' => $dto->specialty
         ]);
-    }
-
-    public function existsByUser(string $personId): bool
-    {
-        return Doctor::where("person_id", $personId)->exists();
     }
 }

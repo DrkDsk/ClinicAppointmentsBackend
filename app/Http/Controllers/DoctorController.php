@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Classes\DTOs\Doctor\CreateDoctorDTO;
+use App\Classes\DTOs\Person\CreatePersonDTO;
+use App\Classes\DTOs\User\CreateUserDTO;
 use App\Http\Requests\CreateDoctorRequest;
 use App\Http\Resources\DoctorResource;
 use App\Infrastructure\Services\Doctor\DoctorService;
-use App\Models\Person;
 use Carbon\Carbon;
 
 class DoctorController extends Controller
@@ -16,13 +17,30 @@ class DoctorController extends Controller
     {
     }
 
-    public function store(CreateDoctorRequest $request, Person $person): DoctorResource
+    public function store(CreateDoctorRequest $request): DoctorResource
     {
+        $personRequest = $request->person;
+        $userRequest = $request->user;
+        $doctorRequest = $request->doctor;
+
+        $personDto = new CreatePersonDTO(
+            name: $personRequest["name"],
+            email: $personRequest["email"],
+            birthday: Carbon::parse($personRequest["birthday"]),
+            phone: $personRequest["phone"]
+        );
+        $userDto = null;
+
+        if ($userRequest) {
+            $userDto = new CreateUserDTO(
+                password: $userRequest["password"]
+            );
+        }
+
         $dto = new CreateDoctorDTO(
-            personId: $person->id,
-            personEmail: $person->email,
-            birthday: Carbon::parse($person->birthday),
-            specialty: $request['specialty']
+            person: $personDto,
+            specialty: $doctorRequest['specialty'],
+            user: $userDto
         );
 
         $doctor = $this->service->create($dto);

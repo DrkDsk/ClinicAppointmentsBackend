@@ -23,7 +23,14 @@ class CreateDoctorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'specialty' => [
+            'person' => ['required', 'array'],
+            'person.name' => ['required', 'string'],
+            'person.email' => ['required', 'email', 'unique:people,email'],
+            'person.birthday' => ['required', 'date', 'before:today'],
+            'person.phone' => ['required', 'digits:10'],
+
+            'doctor' => ['required', 'array'],
+            'doctor.specialty' => [
                 'required',
                 'string',
                 function ($attribute, $value, $fail) {
@@ -39,7 +46,9 @@ class CreateDoctorRequest extends FormRequest
                         $this->merge([$attribute => $match]);
                     }
                 }
-            ]
+            ],
+            'user' => ['nullable', 'array'],
+            'user.password' => ['required_with:user', 'string']
         ];
     }
 }

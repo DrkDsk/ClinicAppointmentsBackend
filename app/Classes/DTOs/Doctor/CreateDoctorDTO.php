@@ -2,15 +2,15 @@
 
 namespace App\Classes\DTOs\Doctor;
 
-use Carbon\Carbon;
+use App\Classes\DTOs\Person\CreatePersonDTO;
+use App\Classes\DTOs\User\CreateUserDTO;
 
 class CreateDoctorDTO
 {
     public function __construct(
-        public readonly int $personId,
-        public readonly string $personEmail,
-        public readonly Carbon $birthday,
-        public readonly string $specialty
+        public readonly CreatePersonDTO $person,
+        public readonly string $specialty,
+        public readonly ?CreateUserDTO $user = null,
     ) {
     }
 }
