@@ -15,7 +15,7 @@ class UserController extends Controller
     {
     }
 
-    public function get(Request $request)
+    public function get(Request $request): UserResource
     {
         $user = $request->user();
 
