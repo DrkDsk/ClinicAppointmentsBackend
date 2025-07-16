@@ -21,8 +21,8 @@ class EloquentPatientRepository implements PatientRepository
         ]);
     }
 
-    public function existsByUser(string $userId): bool
+    public function existsByUser(string $personId): bool
     {
-        return Patient::where('user_id', $userId)->exists();
+        return Patient::where('user_id', $personId)->exists();
     }
 }

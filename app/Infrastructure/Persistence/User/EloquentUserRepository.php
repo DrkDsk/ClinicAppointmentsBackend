@@ -2,25 +2,24 @@
 
 namespace App\Infrastructure\Persistence\User;
 
-use App\Classes\DTOs\CreateUserDTO;
+use App\Classes\DTOs\User\CreateUserDTO;
 use App\Domain\Repositories\UserRepository;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class EloquentUserRepository implements UserRepository
 {
     public function store(CreateUserDTO $dto): User
     {
         return User::create([
-            'name' => $dto->name,
-            'email' => $dto->email,
-            'password' => $dto->password,
-            'roles' => $dto->roles
+            'person_id' => $dto->personId,
+            'password' => Hash::make($dto->password),
         ]);
     }
 
-    public function existsByEmail(string $email): bool
+    public function existsByPerson(string $personId): bool
     {
-        return User::where('email', $email)->exists();
+        return User::where('person_id', $personId)->exists();
     }
 
 }

@@ -1,13 +1,15 @@
-<?php 
+<?php
 
-namespace App\Classes\DTOs;
+namespace App\Classes\DTOs\User;
 
-class CreateUserDTO {
+class CreateUserDTO
+{
 
     public function __construct(
-        public readonly string $name,
-        public readonly string $email,
+        public readonly int $personId,
+        public readonly ?string $personEmail = null,
         public readonly string $password,
         public readonly array $roles
-    ) {}
+    ) {
+    }
 }
