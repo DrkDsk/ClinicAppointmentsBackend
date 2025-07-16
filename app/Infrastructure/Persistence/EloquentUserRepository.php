@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Persistence\User;
+namespace App\Infrastructure\Persistence;
 
 use App\Classes\DTOs\User\CreateUserDTO;
 use App\Domain\Repositories\UserRepository;

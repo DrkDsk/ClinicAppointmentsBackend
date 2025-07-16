@@ -5,7 +5,7 @@ namespace App\Infrastructure\Services\Person;
 use App\Classes\DTOs\Person\PersonDTO;
 use App\Classes\DTOs\Response\PersonServiceResult;
 use App\Domain\Services\PersonServiceInterface;
-use App\Infrastructure\Persistence\Person\EloquentPersonRepository;
+use App\Infrastructure\Persistence\EloquentPersonRepository;
 
 class PersonService implements PersonServiceInterface
 {

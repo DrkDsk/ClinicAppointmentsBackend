@@ -1,13 +1,10 @@
 <?php
 
-namespace App\Infrastructure\Persistence\Person;
+namespace App\Infrastructure\Persistence;
 
 use App\Classes\DTOs\Person\PersonDTO;
 use App\Domain\Repositories\PersonRepository;
-use App\Models\Doctor;
-use App\Models\Patient;
 use App\Models\Person;
-use App\Models\Receptionist;
 
 class EloquentPersonRepository implements PersonRepository
 {

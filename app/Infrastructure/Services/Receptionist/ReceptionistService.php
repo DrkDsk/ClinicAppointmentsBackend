@@ -6,7 +6,7 @@ use App\Classes\DTOs\Receptionist\CreateReceptionistDTO;
 use App\Domain\Services\ReceptionistServiceInterface;
 use App\Exceptions\ModelAlreadyExistsException;
 use App\Http\Resources\ReceptionistResource;
-use App\Infrastructure\Persistence\Receptionist\EloquentReceptionistRepository;
+use App\Infrastructure\Persistence\EloquentReceptionistRepository;
 use App\Models\Receptionist;
 
 class ReceptionistService implements ReceptionistServiceInterface

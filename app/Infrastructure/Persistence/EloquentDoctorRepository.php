@@ -1,5 +1,6 @@
 <?php
-namespace App\Infrastructure\Persistence\Doctor;
+
+namespace App\Infrastructure\Persistence;
 
 use App\Classes\DTOs\Doctor\CreateDoctorDTO;
 use App\Domain\Repositories\DoctorRepository;

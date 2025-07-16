@@ -5,7 +5,7 @@ namespace App\Infrastructure\Services\Patient;
 use App\Classes\DTOs\Patient\CreatePatientDTO;
 use App\Domain\Services\PatientServiceInterface;
 use App\Exceptions\ModelAlreadyExistsException;
-use App\Infrastructure\Persistence\Patient\EloquentPatientRepository;
+use App\Infrastructure\Persistence\EloquentPatientRepository;
 use App\Models\Patient;
 
 class PatientService implements PatientServiceInterface

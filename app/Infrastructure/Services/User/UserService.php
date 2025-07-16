@@ -5,7 +5,7 @@ namespace App\Infrastructure\Services\User;
 use App\Classes\DTOs\User\CreateUserDTO;
 use App\Domain\Services\UserServiceInterface;
 use App\Http\Resources\UserResource;
-use App\Infrastructure\Persistence\User\EloquentUserRepository;
+use App\Infrastructure\Persistence\EloquentUserRepository;
 
 class UserService implements UserServiceInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Persistence\Receptionist;
+namespace App\Infrastructure\Persistence;
 
 use App\Classes\DTOs\Receptionist\CreateReceptionistDTO;
 use App\Domain\Repositories\ReceptionistRepository;
