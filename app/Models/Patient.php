@@ -16,4 +16,9 @@ class Patient extends Model
         'weight_measure_type',
         'height_measure_type'
     ];
+
+    public function person()
+    {
+        return $this->belongsTo(Person::class);
+    }
 }
