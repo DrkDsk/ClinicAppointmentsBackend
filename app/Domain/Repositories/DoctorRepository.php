@@ -8,5 +8,5 @@ use App\Models\Doctor;
 interface DoctorRepository
 {
     public function create(CreateDoctorDTO $dto): Doctor;
-    public function existsByUser(string $userId): bool;
+    public function existsByUser(string $personId): bool;
 }

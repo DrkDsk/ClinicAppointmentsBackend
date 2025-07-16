@@ -25,4 +25,9 @@ class Person extends Model
     {
         return $this->hasOne(Receptionist::class);
     }
+
+    public function doctor(): HasOne
+    {
+        return $this->hasOne(Doctor::class);
+    }
 }
