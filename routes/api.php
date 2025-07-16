@@ -12,7 +12,7 @@ Route::prefix('users/admin')
         Route::post('create', [UserController::class, 'store']);
 
         Route::prefix('doctors')->group(function () {
-            Route::post('create/{user}', [DoctorController::class, 'store']);
+            Route::post('create/{person}', [DoctorController::class, 'store']);
         });
 
         Route::prefix('patients')->group(function () {
@@ -28,6 +28,7 @@ Route::prefix('users')
     ->middleware('auth:sanctum')->group(function () {
         Route::prefix('roles')->group(function () {
             Route::post('set', [RoleController::class, 'set']);
+            Route::get('onlyAdmin', [RoleController::class, 'admins']);
         });
 
         Route::get('get', [UserController::class, 'get']);

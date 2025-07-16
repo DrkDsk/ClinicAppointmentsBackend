@@ -10,14 +10,13 @@ class EloquentDoctorRepository implements DoctorRepository
     public function create(CreateDoctorDTO $dto): Doctor
     {
         return Doctor::create([
-            'user_id' => $dto->userId,
-            'birthday' => $dto->birthday,
+            'person_id' => $dto->personId,
             'specialty' => $dto->specialty
         ]);
     }
 
-    public function existsByUser(string $userId): bool
+    public function existsByUser(string $personId): bool
     {
-        return Doctor::where("user_id", $userId)->exists();
+        return Doctor::where("person_id", $personId)->exists();
     }
 }
