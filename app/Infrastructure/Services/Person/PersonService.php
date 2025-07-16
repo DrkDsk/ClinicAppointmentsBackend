@@ -16,16 +16,16 @@ class PersonService implements PersonServiceInterface
 
     public function store(PersonDTO $dto): PersonServiceResult
     {
-        $model = $this->repository->existsByEmail($dto->email);
-        if ($model) {
+        $person = $this->repository->existsByEmail($dto->email);
+        if ($person) {
             return new PersonServiceResult(
                 wasCreated: false,
-                model: $model
+                person: $person
             );
         }
 
         $person = $this->repository->create($dto);
 
-        return new PersonServiceResult(true, model: $person);
+        return new PersonServiceResult(true, person: $person);
     }
 }

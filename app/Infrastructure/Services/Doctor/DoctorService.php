@@ -31,16 +31,18 @@ class DoctorService implements DoctorServiceInterface
             $this->userService->store(
                 dto: $dto->user,
                 email: $dto->person->email,
-                personId: $personResult->model->id,
+                personId: $personResult->person->id,
                 role: Role::DOCTOR
             );
         }
 
-        $newDto = $dto->copyWith($dto->person->copyWith($personResult->model->id));
+        $doctor = $this->repository->create(
+            $dto->copyWith(
+                person: $dto->person->copyWith(id: $personResult->person->id)
+            )
+        );
 
-        $doctor = $this->repository->create(dto: $newDto);
-
-        return new DoctorServiceResult(true, personResult: $personResult, model: $doctor);
+        return new DoctorServiceResult(true, personResult: $personResult, doctor: $doctor);
     }
 }
 

@@ -10,7 +10,7 @@ class DoctorServiceResult
     public function __construct(
         public readonly bool $wasCreated,
         public readonly PersonServiceResult $personResult,
-        public readonly ?Doctor $model = null,
+        public readonly ?Doctor $doctor = null,
     ) {
     }
 }

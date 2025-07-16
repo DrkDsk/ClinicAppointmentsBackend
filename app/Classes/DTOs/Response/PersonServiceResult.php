@@ -8,7 +8,7 @@ class PersonServiceResult
 {
     public function __construct(
         public readonly bool $wasCreated,
-        public readonly ?Person $model = null,
+        public readonly ?Person $person = null,
     ) {
     }
 }

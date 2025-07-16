@@ -12,8 +12,8 @@ class CreateDoctorResource extends JsonResource
         return [
             'was_created' => $this->resource->wasCreated,
             'person_was_created' => $this->resource->personResult->wasCreated,
-            'doctor' => new DoctorResource($this->resource->model),
-            'person' => new PersonResource($this->resource->personResult->model)
+            'doctor' => new DoctorResource($this->resource->doctor),
+            'person' => new PersonResource($this->resource->personResult->person)
         ];
     }
 }
