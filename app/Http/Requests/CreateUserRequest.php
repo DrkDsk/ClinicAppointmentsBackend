@@ -3,8 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Classes\Role as RoleClass;
 use Illuminate\Validation\Rule;
+use App\Classes\Const\Role as RoleClass;
 
 class CreateUserRequest extends FormRequest
 {

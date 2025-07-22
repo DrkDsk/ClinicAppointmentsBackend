@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Classes\Specialty;
+use App\Classes\Const\Specialty;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateDoctorRequest extends FormRequest
