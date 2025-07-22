@@ -46,12 +46,6 @@ class CreatePatientRequest extends FormRequest
 
     public function prepareForValidation()
     {
-        if ($this->has(key: 'person.phone')) {
-            $this->merge([
-                'person.phone' => preg_replace('/\D/', '', $this->input('person.phone')),
-            ]);
-        }
-
         $this->merge([
             'patient.height_measure_type' => $this->input('patient.height_measure_type') ?? HeightMeasureEnum::CENTIMETER->value,
             'patient.weight_measure_type' => $this->input('patient.weight_measure_type') ?? WeightMeasureEnum::KILOGRAM->value,
