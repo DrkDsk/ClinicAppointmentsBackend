@@ -9,16 +9,24 @@ class ErrorResource extends JsonResource
 {
 
     private string $message = "";
+    private array $data = [];
 
-    public function __construct($message = "Ha ocurrido un error")
+    public function __construct($message = "Ha ocurrido un error", $data = [])
     {
         $this->message = $message;
+        $this->data = $data;
     }
 
     public function toArray(Request $request): array
     {
-        return [
+        $response = [
             "message" => $this->message
         ];
+
+        if (count($this->data)) {
+           $response['data'] = $this->data;
+        }
+
+        return $response;
     }
 }
