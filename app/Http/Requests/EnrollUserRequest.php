@@ -3,10 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
-use App\Classes\Const\Role as RoleClass;
 
-class CreateUserRequest extends FormRequest
+class EnrollUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +22,8 @@ class CreateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'roles' => ['required', 'array'],
-            'roles.*' => ['string', Rule::in(RoleClass::all())]
+            'user' => ['required', 'array'],
+            'user.password' => ['required_with:user', 'string']
         ];
     }
 }

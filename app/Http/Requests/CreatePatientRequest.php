@@ -26,26 +26,29 @@ class CreatePatientRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'birthday' => ['required', 'date', 'before:today'],
-            'phone_number' => ['required', 'digits:10'],
-            'height' => ['nullable', 'numeric', 'min:0.01', 'max:999.99'],
-            'weight' => ['nullable', 'numeric', 'min:0.01', 'max:999.99'],
-            'height_measure_type' => ['nullable', Rule::in(BodyMeasures::heightMeasureTypes())],
-            'weight_measure_type' => ['nullable', Rule::in(BodyMeasures::weightMeasureTypes())],
+
+            'person' => ['required', 'array'],
+            'person.name' => ['required', 'string'],
+            'person.email' => ['required', 'email'],
+            'person.birthday' => ['required', 'date', 'before:today'],
+            'person.phone' => ['required', 'digits:10'],
+
+            'patient' => ['required', 'array'],
+            'patient.height' => ['required', 'numeric', 'min:0.01', 'max:999.99'],
+            'patient.weight' => ['required', 'numeric', 'min:0.01', 'max:999.99'],
+            'patient.height_measure_type' => ['required', Rule::in(BodyMeasures::heightMeasureTypes())],
+            'patient.weight_measure_type' => ['required', Rule::in(BodyMeasures::weightMeasureTypes())],
+
+            'user' => ['required', 'array'],
+            'user.password' => ['required', 'string']
         ];
     }
 
     public function prepareForValidation()
     {
-        if ($this->has('phone_number')) {
-            $this->merge([
-                'phone_number' => preg_replace('/\D/', '', $this->input('phone_number')),
-            ]);
-        }
-
         $this->merge([
-            'height_measure_type' => $this->input('height_measure_type') ?? HeightMeasureEnum::CENTIMETER->value,
-            'weight_measure_type' => $this->input('weight_measure_type') ?? WeightMeasureEnum::KILOGRAM->value,
+            'patient.height_measure_type' => $this->input('patient.height_measure_type') ?? HeightMeasureEnum::CENTIMETER->value,
+            'patient.weight_measure_type' => $this->input('patient.weight_measure_type') ?? WeightMeasureEnum::KILOGRAM->value,
         ]);
     }
 }

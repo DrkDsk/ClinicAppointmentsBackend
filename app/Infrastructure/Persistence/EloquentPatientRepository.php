@@ -10,10 +10,8 @@ class EloquentPatientRepository implements PatientRepository
 {
     public function store(CreatePatientDTO $dto): Patient
     {
-        return Patient::create([
-            'user_id' => $dto->userId,
-            'birthday' => $dto->birthday,
-            'phone_number' => $dto->phoneNumber,
+        return Patient::create(attributes: [
+            'person_id' => $dto->person->id,
             'weight' => $dto->weight,
             'height' => $dto->height,
             'weight_measure_type' => $dto->weightMeasureEnum,
@@ -23,6 +21,6 @@ class EloquentPatientRepository implements PatientRepository
 
     public function existsByUser(string $personId): bool
     {
-        return Patient::where('user_id', $personId)->exists();
+        return Patient::where('person_id', $personId)->exists();
     }
 }
