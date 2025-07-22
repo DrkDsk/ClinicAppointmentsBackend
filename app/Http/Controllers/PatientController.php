@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Classes\DTOs\Patient\CreatePatientDTO;
-use App\Classes\Enum\HeightMeasureEnum;
-use App\Classes\Enum\WeightMeasureEnum;
+use App\Factories\CreatePatientDTOFactory;
 use App\Http\Requests\CreatePatientRequest;
+use App\Http\Resources\ErrorResource;
+use App\Http\Resources\PatientResource;
 use App\Infrastructure\Services\PatientService;
-use App\Models\User;
-use Carbon\Carbon;
 
 class PatientController extends Controller
 {
@@ -16,22 +14,21 @@ class PatientController extends Controller
     {
     }
 
-    public function store(CreatePatientRequest $request, User $user)
+    public function store(CreatePatientRequest $request) : PatientResource|ErrorResource
     {
-        $weightType = WeightMeasureEnum::tryFrom($request->weight_measure_type) ?? WeightMeasureEnum::KILOGRAM;
-        $heightType = HeightMeasureEnum::tryFrom($request->height_measure_type) ?? HeightMeasureEnum::CENTIMETER;
+        $dto = CreatePatientDTOFactory::fromRequest($request);
 
-        $dto = new CreatePatientDTO(
-            userId: $user->id ?? null,
-            userEmail: $user->email ?? null,
-            birthday: Carbon::parse($request->birthday),
-            phoneNumber: $request->phone_number,
-            weight: $request->weight,
-            height: $request->height,
-            weightMeasureEnum: $weightType,
-            heightMeasureEnum: $heightType
-        );
+        $patientResult = $this->service->store($dto);
 
-        $patient = $this->service->store($dto);
+        if (!$patientResult->personResult->wasCreated) {
+            return new ErrorResource(
+                message:"El perfil ya se encuentra registrado", 
+                data:[
+                    "profile_id" => $patientResult->personResult->person->id
+                ]
+            );
+        }
+
+        return new PatientResource($patientResult->patient);
     }
 }
