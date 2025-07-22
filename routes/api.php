@@ -15,12 +15,12 @@ Route::prefix('users/admin')
             Route::post('create', [DoctorController::class, 'store']);
         });
 
-        Route::prefix('receptionists')->group(function () {
-            Route::post('create/{person}', [ReceptionistController::class, 'store']);
+        Route::prefix('patients')->group(function () {
+            Route::post('create', [PatientController::class, 'store']);
         });
 
-        Route::prefix('patients')->group(function () {
-            Route::post('create/{user?}', [PatientController::class, 'store']);
+        Route::prefix('receptionists')->group(function () {
+            Route::post('create/{person}', [ReceptionistController::class, 'store']);
         });
 
         Route::post('enroll/{person}', [UserController::class, 'enroll']);
