@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Classes\Role;
 use App\Http\Requests\CreateRoleRequest;
+use App\Http\Requests\GetRoleRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 
@@ -17,10 +17,12 @@ class RoleController extends Controller
         return new UserResource($user);
     }
 
-    public function admins()
+    public function only(GetRoleRequest $request)
     {
-        $users = User::role(Role::ADMIN)->paginate(20);
+        $role = $request->role;
 
-        return $users;
+        $users = User::role($role)->paginate(20);
+
+        return UserResource::collection($users);
     }
 }

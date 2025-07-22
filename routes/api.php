@@ -10,9 +10,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('users/admin')
     ->middleware(['auth:sanctum', 'role:admin'])->group(function () {
-        Route::prefix('users')->group(function () {
-            Route::post('create/{person}', [UserController::class, 'store']);
-        });
 
         Route::prefix('doctors')->group(function () {
             Route::post('create', [DoctorController::class, 'store']);
@@ -25,6 +22,8 @@ Route::prefix('users/admin')
         Route::prefix('patients')->group(function () {
             Route::post('create/{user?}', [PatientController::class, 'store']);
         });
+
+        Route::post('enroll/{person}', [UserController::class, 'enroll']);
     });
 
 Route::prefix('auth')->group(function () {
@@ -35,7 +34,7 @@ Route::prefix('users')
     ->middleware('auth:sanctum')->group(function () {
         Route::prefix('roles')->group(function () {
             Route::post('set', [RoleController::class, 'set']);
-            Route::get('onlyAdmin', [RoleController::class, 'admins']);
+            Route::post('only', [RoleController::class, 'only']);
         });
 
         Route::get('get', [UserController::class, 'get']);
