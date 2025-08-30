@@ -16,7 +16,12 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             PersonSeeder::class,
             TypeAppointmentSeeder::class,
-            AppointmentSeeder::class
+            AppointmentSeeder::class,
+            PaymentSeeder::class,
+            TreatmentSeeder::class,
+            TreatmentsPatientSeeder::class,
+            PaymentsTreatmentsAppointmentsSeeder::class,
+            ProcedureSeeder::class
         ]);
     }
 }

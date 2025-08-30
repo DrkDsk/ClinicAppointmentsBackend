@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('treatments', function (Blueprint $table) {
             $table->id();
             $table->string('plan');
+            $table->string('category')->after('plan');
             $table->string('description')->nullable();
             $table->integer('cost_basis')->nullable();
             $table->timestamps();
