@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Classes\Const\TreatmentsCatalog;
 use App\Models\Treatment;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class TreatmentSeeder extends Seeder
@@ -13,6 +13,17 @@ class TreatmentSeeder extends Seeder
      */
     public function run(): void
     {
-        Treatment::factory()->count(50)->create();
+        $treatMents = collect(TreatmentsCatalog::TREATMENTS);
+
+        $data = $treatMents->map(function ($plan) {
+            return [
+                'plan' => $plan["nombre"],
+                'category' => $plan["categoria"],
+                'description' => fake()->sentence(2),
+                'cost_basis' => fake()->numberBetween(100, 1000)
+            ];
+        })->toArray();
+
+        Treatment::insert($data);
     }
 }
