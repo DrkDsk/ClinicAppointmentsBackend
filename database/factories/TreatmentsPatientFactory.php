@@ -7,6 +7,7 @@ use App\Models\Appointment;
 use App\Models\Doctor;
 use App\Models\Patient;
 use App\Models\Treatment;
+use App\Models\TreatmentsPatient;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -35,5 +36,21 @@ class TreatmentsPatientFactory extends Factory
             'observations' => fake()->sentence(),
             'coast_total' => fake()->numberBetween(100, 1000)
         ];
+    }
+
+    public function configure()
+    {
+        return $this->afterCreating(function (TreatmentsPatient $treatmentsPatient) {
+
+            $appointment = Appointment::where([
+                'doctor_id' => $treatmentsPatient->doctor_id,
+                'patient_id' => $treatmentsPatient->patient_id
+            ])->first();
+
+            $treatmentsPatient->treatmentAppointments()->create([
+                'appointment_id' => $appointment->id ?? null,
+                'notes' => fake()->sentence()
+            ]);
+        });
     }
 }

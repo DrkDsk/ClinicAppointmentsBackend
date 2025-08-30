@@ -20,7 +20,6 @@ class DatabaseSeeder extends Seeder
             PaymentSeeder::class,
             TreatmentSeeder::class,
             TreatmentsPatientSeeder::class,
-            TreatmentsAppointmentsSeeder::class
         ]);
     }
 }

@@ -10,7 +10,7 @@ class TreatmentsAppointment extends Model
     use HasFactory;
 
     public $fillable = [
-        'treatment_patient_id',
+        'treatments_patient_id',
         'appointment_id',
         'notes'
     ];
