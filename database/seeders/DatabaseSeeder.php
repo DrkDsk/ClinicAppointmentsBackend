@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
             AppointmentSeeder::class,
             PaymentSeeder::class,
             TreatmentSeeder::class,
-            TreatmentPatientSeeder::class,
+            TreatmentsPatientSeeder::class,
+            TreatmentsAppointmentsSeeder::class
         ]);
     }
 }
