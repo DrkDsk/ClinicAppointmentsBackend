@@ -8,5 +8,5 @@ use App\Models\Person;
 interface PersonRepository
 {
     public function create(PersonDTO $dto): Person;
-    public function existsByEmail(string $email): ?Person;
+    public function existsByField(string $value, string $field = "phone"): ?Person;
 }
