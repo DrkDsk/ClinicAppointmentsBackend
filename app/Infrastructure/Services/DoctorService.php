@@ -4,43 +4,47 @@ namespace App\Infrastructure\Services;
 
 use App\Classes\Const\Role;
 use App\Classes\DTOs\Doctor\CreateDoctorDTO;
-use App\Classes\DTOs\Response\DoctorServiceResult;
 use App\Domain\Services\DoctorServiceInterface;
+use App\Exceptions\PersonAlreadyExistException;
 use App\Infrastructure\Persistence\EloquentDoctorRepository;
+use App\Models\Doctor;
+use Illuminate\Support\Facades\DB;
+use Throwable;
 
-class DoctorService implements DoctorServiceInterface
+readonly class DoctorService implements DoctorServiceInterface
 {
     public function __construct(
-        private readonly EloquentDoctorRepository $repository,
-        private readonly PersonService $personService,
-        private readonly UserService $userService
+        private EloquentDoctorRepository $repository,
+        private PersonService            $personService,
+        private UserService              $userService
     ) {
     }
 
-    public function create(CreateDoctorDTO $dto): DoctorServiceResult
+    /**
+     * @throws PersonAlreadyExistException
+     * @throws Throwable
+     */
+    public function create(CreateDoctorDTO $dto) : Doctor
     {
-        $personResult = $this->personService->store($dto->person);
+        $personData = $dto->person;
+        $userData = $dto->user;
+        $specialty = $dto->specialty;
 
-        if (!$personResult->wasCreated) {
-            return new DoctorServiceResult(wasCreated: false, personResult: $personResult);
-        }
+        return DB::transaction(function () use ($personData, $userData, $specialty) {
 
-        if ($dto->user) {
-            $this->userService->store(
-                dto: $dto->user,
-                email: $dto->person->email,
-                personId: $personResult->person->id,
-                role: Role::DOCTOR
-            );
-        }
+            $person = $this->personService->store($personData);
 
-        $doctor = $this->repository->create(
-            $dto->copyWith(
-                person: $dto->person->copyWith(id: $personResult->person->id)
-            )
-        );
+            if ($userData) {
+                $this->userService->store(
+                    dto: $userData,
+                    email: $personData->email,
+                    personId: $person->id,
+                    role: Role::DOCTOR
+                );
+            }
 
-        return new DoctorServiceResult(true, personResult: $personResult, doctor: $doctor);
+            return $this->repository->create($person->id, $specialty);
+        });
     }
 }
 

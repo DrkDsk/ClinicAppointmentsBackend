@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\Hash;
 
 class EloquentUserRepository implements UserRepository
 {
-    public function store(CreateUserDTO $dto, int $personId): User
+    public function store(string $password, int $personId): User
     {
         return User::create([
             'person_id' => $personId,
-            'password' => Hash::make($dto->password),
+            'password' => Hash::make($password),
         ]);
     }
 

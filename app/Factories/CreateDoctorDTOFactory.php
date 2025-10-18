@@ -13,7 +13,7 @@ class CreateDoctorDTOFactory
     public static function fromRequest(Request $request): CreateDoctorDTO
     {
         $person = $request->input('person', []);
-        $user = $request->input('user', null);
+        $user = $request->input('user');
         $doctor = $request->input('doctor', []);
 
         $personDto = new PersonDTO(

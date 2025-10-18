@@ -8,13 +8,15 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class ErrorResource extends JsonResource
 {
 
-    private string $message = "";
-    private array $data = [];
+    private string $message;
+    private array $data;
+    private int $statusCode;
 
-    public function __construct($message = "Ha ocurrido un error", $data = [])
+    public function __construct($message = "Ha ocurrido un error", $data = [], int $statusCode = 500)
     {
         $this->message = $message;
         $this->data = $data;
+        $this->statusCode = $statusCode;
     }
 
     public function toArray(Request $request): array
@@ -28,5 +30,10 @@ class ErrorResource extends JsonResource
         }
 
         return $response;
+    }
+
+    public function withResponse($request, $response): void
+    {
+        $response->setStatusCode($this->statusCode);
     }
 }

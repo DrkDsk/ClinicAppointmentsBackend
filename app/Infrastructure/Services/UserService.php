@@ -18,7 +18,7 @@ class UserService implements UserServiceInterface
         $user = $this->repository->existsByPerson($email);
 
         if (!$user) {
-            $user = $this->repository->store($dto, $personId);
+            $user = $this->repository->store($dto->password, $personId);
             $user->syncRoles($role);
             $user->save();
         }

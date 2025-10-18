@@ -3,9 +3,9 @@
 namespace App\Domain\Services;
 
 use App\Classes\DTOs\Person\PersonDTO;
-use App\Classes\DTOs\Response\PersonServiceResult;
+use App\Models\Person;
 
 interface PersonServiceInterface
 {
-    public function store(PersonDTO $dto): PersonServiceResult;
+    public function store(PersonDTO $dto): Person;
 }
