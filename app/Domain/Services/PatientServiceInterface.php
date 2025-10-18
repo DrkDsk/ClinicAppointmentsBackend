@@ -3,9 +3,9 @@
 namespace App\Domain\Services;
 
 use App\Classes\DTOs\Patient\CreatePatientDTO;
-use App\Classes\DTOs\Response\PatientServiceResult;
+use App\Models\Patient;
 
 interface PatientServiceInterface
 {
-    public function store(CreatePatientDTO $dto): PatientServiceResult;
+    public function store(CreatePatientDTO $dto): Patient;
 }

@@ -7,16 +7,16 @@ use App\Classes\DTOs\User\CreateUserDTO;
 use App\Classes\Enum\HeightMeasureEnum;
 use App\Classes\Enum\WeightMeasureEnum;
 
-class CreatePatientDTO
+readonly class CreatePatientDTO
 {
     public function __construct(
-        public readonly PersonDTO $person,
-        public readonly float $weight,
-        public readonly float $height,
-        public readonly WeightMeasureEnum $weightMeasureEnum,
-        public readonly HeightMeasureEnum $heightMeasureEnum,
-        public readonly CreateUserDTO $user,
-        public readonly ?int $id = null,
+        public PersonDTO         $person,
+        public float             $weight,
+        public float             $height,
+        public WeightMeasureEnum $weightMeasureEnum,
+        public HeightMeasureEnum $heightMeasureEnum,
+        public CreateUserDTO     $user,
+        public ?int              $id = null,
     ) {
     }
 
