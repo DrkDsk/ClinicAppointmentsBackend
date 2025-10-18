@@ -18,8 +18,8 @@ class EloquentPersonRepository implements PersonRepository
         ]);
     }
 
-    public function existsByEmail(string $email): ?Person
+    public function existsByField(string $value, string $field = "phone"): ?Person
     {
-        return Person::where('email', $email)->first();
+        return Person::where($field, $value)->first();
     }
 }

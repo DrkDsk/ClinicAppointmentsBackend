@@ -2,32 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\PersonAlreadyExistException;
 use App\Factories\CreateDoctorDTOFactory;
 use App\Http\Requests\CreateDoctorRequest;
 use App\Http\Resources\DoctorResource;
 use App\Http\Resources\ErrorResource;
 use App\Infrastructure\Services\DoctorService;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Throwable;
 
 class DoctorController extends Controller
 {
 
     public function __construct(private readonly DoctorService $service) {}
 
-    public function store(CreateDoctorRequest $request): DoctorResource|ErrorResource
+    /**
+     * @throws PersonAlreadyExistException
+     * @throws Throwable
+     */
+    public function store(CreateDoctorRequest $request) : JsonResource
     {
         $dto = CreateDoctorDTOFactory::fromRequest($request);
 
-        $doctorResult = $this->service->create($dto);
+        try {
+            $doctor = $this->service->create($dto);
 
-        if (!$doctorResult->personResult->wasCreated) {
-            return new ErrorResource(
-                message: "El perfil ya se encuentra registrado", 
-                data: [
-                    "profile_id" => $doctorResult->personResult->person->id
-                ]
-            );
+            return (new DoctorResource($doctor));
+        } catch (PersonAlreadyExistException $e) {
+            return new ErrorResource(message: $e->getMessage(), statusCode: 409);
         }
-
-        return new DoctorResource($doctorResult->doctor);
     }
 }

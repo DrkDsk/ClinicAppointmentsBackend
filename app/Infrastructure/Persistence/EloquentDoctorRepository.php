@@ -8,11 +8,11 @@ use App\Models\Doctor;
 
 class EloquentDoctorRepository implements DoctorRepository
 {
-    public function create(CreateDoctorDTO $dto): Doctor
+    public function create(string $personId, string $specialty): Doctor
     {
         return Doctor::create([
-            'person_id' => $dto->person->id,
-            'specialty' => $dto->specialty
+            'person_id' => $personId,
+            'specialty' => $specialty
         ]);
     }
 }

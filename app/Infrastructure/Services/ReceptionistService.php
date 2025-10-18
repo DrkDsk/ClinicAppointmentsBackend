@@ -9,11 +9,15 @@ use App\Http\Resources\ReceptionistResource;
 use App\Infrastructure\Persistence\EloquentReceptionistRepository;
 use App\Models\Receptionist;
 
-class ReceptionistService implements ReceptionistServiceInterface
+readonly class ReceptionistService implements ReceptionistServiceInterface
 {
-    public function __construct(protected readonly EloquentReceptionistRepository $repository)
+    public function __construct(protected EloquentReceptionistRepository $repository)
     {
     }
+
+    /**
+     * @throws ModelAlreadyExistsException
+     */
     public function store(CreateReceptionistDTO $dto): ReceptionistResource
     {
         if ($this->repository->existsByUser($dto->person_id)) {

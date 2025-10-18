@@ -3,29 +3,28 @@
 namespace App\Infrastructure\Services;
 
 use App\Classes\DTOs\Person\PersonDTO;
-use App\Classes\DTOs\Response\PersonServiceResult;
 use App\Domain\Services\PersonServiceInterface;
+use App\Exceptions\PersonAlreadyExistException;
 use App\Infrastructure\Persistence\EloquentPersonRepository;
+use App\Models\Person;
 
-class PersonService implements PersonServiceInterface
+readonly class PersonService implements PersonServiceInterface
 {
 
-    public function __construct(private readonly EloquentPersonRepository $repository)
+    public function __construct(private EloquentPersonRepository $repository)
     {
     }
 
-    public function store(PersonDTO $dto): PersonServiceResult
+    /**
+     * @throws PersonAlreadyExistException
+     */
+    public function store(PersonDTO $dto): Person
     {
-        $person = $this->repository->existsByEmail($dto->email);
+        $person = $this->repository->existsByField(value: $dto->email, field: "email");
         if ($person) {
-            return new PersonServiceResult(
-                wasCreated: false,
-                person: $person
-            );
+            throw new PersonAlreadyExistException(message: "Este usuario ya se encuentra registrado");
         }
 
-        $person = $this->repository->create($dto);
-
-        return new PersonServiceResult(true, person: $person);
+        return $this->repository->create($dto);
     }
 }
