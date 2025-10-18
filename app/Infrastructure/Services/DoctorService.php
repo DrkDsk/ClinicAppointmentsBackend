@@ -21,8 +21,7 @@ readonly class DoctorService implements DoctorServiceInterface
     }
 
     /**
-     * @throws PersonAlreadyExistException
-     * @throws Throwable
+     * @throws PersonAlreadyExistException|Throwable
      */
     public function create(CreateDoctorDTO $dto) : Doctor
     {

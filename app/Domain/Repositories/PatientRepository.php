@@ -7,6 +7,6 @@ use App\Models\Patient;
 
 interface PatientRepository
 {
-    public function store(CreatePatientDTO $dto, string $personId): Patient;
+    public function store(CreatePatientDTO $patientData, string $personId): Patient;
     public function existsByUser(string $personId): bool;
 }

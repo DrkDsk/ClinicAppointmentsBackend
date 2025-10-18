@@ -4,16 +4,19 @@ namespace App\Infrastructure\Services;
 
 use App\Classes\DTOs\User\CreateUserDTO;
 use App\Domain\Services\UserServiceInterface;
-use App\Http\Resources\UserResource;
 use App\Infrastructure\Persistence\EloquentUserRepository;
+use App\Models\User;
 
-class UserService implements UserServiceInterface
+readonly class UserService implements UserServiceInterface
 {
-    public function __construct(private readonly EloquentUserRepository $repository)
+    public function __construct(private EloquentUserRepository $repository)
     {
     }
 
-    public function store(CreateUserDTO $dto, string $email, int $personId, string $role): UserResource
+    /**
+     * @throws \Throwable
+     */
+    public function store(CreateUserDTO $dto, string $email, int $personId, string $role): User
     {
         $user = $this->repository->existsByPerson($email);
 
@@ -23,6 +26,6 @@ class UserService implements UserServiceInterface
             $user->save();
         }
 
-        return new UserResource($user);
+        return $user;
     }
 }

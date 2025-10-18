@@ -8,14 +8,14 @@ use App\Models\Patient;
 
 class EloquentPatientRepository implements PatientRepository
 {
-    public function store(CreatePatientDTO $dto, string $personId): Patient
+    public function store(CreatePatientDTO $patientData, string $personId): Patient
     {
         return Patient::create(attributes: [
             'person_id' => $personId,
-            'weight' => $dto->weight,
-            'height' => $dto->height,
-            'weight_measure_type' => $dto->weightMeasureEnum,
-            'height_measure_type' => $dto->heightMeasureEnum
+            'weight' => $patientData->weight,
+            'height' => $patientData->height,
+            'weight_measure_type' => $patientData->weightMeasureEnum,
+            'height_measure_type' => $patientData->heightMeasureEnum
         ]);
     }
 

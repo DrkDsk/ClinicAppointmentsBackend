@@ -8,6 +8,8 @@ use App\Domain\Services\PatientServiceInterface;
 use App\Exceptions\PersonAlreadyExistException;
 use App\Infrastructure\Persistence\EloquentPatientRepository;
 use App\Models\Patient;
+use Illuminate\Support\Facades\DB;
+use Throwable;
 
 readonly class PatientService implements PatientServiceInterface
 {
@@ -20,19 +22,25 @@ readonly class PatientService implements PatientServiceInterface
     }
 
     /**
-     * @throws PersonAlreadyExistException
+     * @throws PersonAlreadyExistException|Throwable
      */
     public function store(CreatePatientDTO $dto): Patient
     {
-        $person = $this->personService->store($dto->person);
+        $personData = $dto->person;
+        $patientData = $dto;
 
-        $this->userService->store(
-            dto: $dto->user,
-            email: $dto->person->email,
-            personId: $person->id,
-            role: Role::PATIENT
-        );
+        return DB::transaction(function () use ($personData, $patientData) {
 
-        return $this->patientRepository->store(dto: $dto, personId: $person->id);
+            $person = $this->personService->store($personData);
+
+            $this->userService->store(
+                dto: $patientData->user,
+                email: $personData->email,
+                personId: $person->id,
+                role: Role::PATIENT
+            );
+
+            return $this->patientRepository->store(patientData: $patientData, personId: $person->id);
+        });
     }
 }
