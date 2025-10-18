@@ -9,6 +9,7 @@ use App\Http\Resources\ErrorResource;
 use App\Http\Resources\PatientResource;
 use App\Infrastructure\Services\PatientService;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Throwable;
 
 class PatientController extends Controller
 {
@@ -19,14 +20,15 @@ class PatientController extends Controller
     public function store(CreatePatientRequest $request) : JsonResource
     {
         try {
+
             $dto = CreatePatientDTOFactory::fromRequest($request);
 
             $patient = $this->service->store($dto);
 
-
             return new PatientResource($patient);
         } catch (PersonAlreadyExistException $e) {
             return new ErrorResource(message: $e->getMessage(), statusCode: 409);
+        } catch (Throwable $e) {
         }
     }
 }

@@ -16,20 +16,19 @@ class DoctorController extends Controller
 
     public function __construct(private readonly DoctorService $service) {}
 
-    /**
-     * @throws PersonAlreadyExistException
-     * @throws Throwable
-     */
     public function store(CreateDoctorRequest $request) : JsonResource
     {
-        $dto = CreateDoctorDTOFactory::fromRequest($request);
-
         try {
+
+            $dto = CreateDoctorDTOFactory::fromRequest($request);
+
             $doctor = $this->service->create($dto);
 
             return (new DoctorResource($doctor));
         } catch (PersonAlreadyExistException $e) {
             return new ErrorResource(message: $e->getMessage(), statusCode: 409);
+        } catch (Throwable) {
+            return new ErrorResource(message: "Se ha producido un error inesperado", statusCode: 409);
         }
     }
 }

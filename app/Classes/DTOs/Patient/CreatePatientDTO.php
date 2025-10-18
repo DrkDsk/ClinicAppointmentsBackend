@@ -19,24 +19,4 @@ readonly class CreatePatientDTO
         public ?int              $id = null,
     ) {
     }
-
-    public function copyWith(
-        ?PersonDTO $person = null,
-        ?float $weight = null,
-        ?float $height = null,
-        ?WeightMeasureEnum $weightMeasureEnum = null,
-        ?HeightMeasureEnum $heightMeasureEnum = null,
-        ?CreateUserDTO $user = null,
-        ?int $id = null
-    ): self {
-        return new self(
-            person: $person ?? $this->person,
-            weight: $weight ?? $this->weight,
-            height: $height ?? $this->height,
-            weightMeasureEnum: $weightMeasureEnum ?? $this->weightMeasureEnum,
-            heightMeasureEnum: $heightMeasureEnum ?? $this->heightMeasureEnum,
-            user: $user ?? $this->user,
-            id: $id ?? $this->id
-        );
-    }
 }
