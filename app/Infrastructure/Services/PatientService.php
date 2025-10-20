@@ -32,11 +32,11 @@ readonly class PatientService implements PatientServiceInterface
         return DB::transaction(function () use ($personData, $patientData) {
 
             $person = $this->personService->store($personData);
-            $userData = $patientData->user;
+            $password = $patientData->password;
 
-            if ($userData) {
+            if ($password) {
                 $this->userService->store(
-                    dto: $userData,
+                    password: $password,
                     email: $personData->email,
                     personId: $person->id,
                     role: Role::PATIENT

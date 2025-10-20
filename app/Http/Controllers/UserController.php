@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\UserExistsException;
 use App\Http\Requests\EnrollUserRequest;
 use App\Http\Resources\ErrorResource;
 use App\Http\Resources\UserResource;
-use App\Infrastructure\Services\UserService;
+use App\Infrastructure\Services\EnrollService;
 use App\Models\Person;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Throwable;
 
 class UserController extends Controller
 {
-    public function __construct(private readonly UserService $service)
+    public function __construct(private readonly EnrollService $service)
     {
     }
 
@@ -28,20 +27,13 @@ class UserController extends Controller
     public function enroll(Person $person, EnrollUserRequest $request) : JsonResource
     {
         try {
-            if ($person->user()->exists()) {
-                return new ErrorResource(message: "Este perfil ya tiene un usuario asignado", statusCode: 409);
-            }
+            $user = $this->service->enroll($person, $request->validated('user.password'));
 
-            return DB::transaction(function () use ($person, $request) {
-                $user = $person->user()->create([
-                    'password' => Hash::make($request->validated('password')),
-                ]);
-
-                $this->service->assignRoleTo($user, $person);
-
-                return new UserResource($user);
-            });
-        } catch (Throwable) {
+            return new UserResource($user);
+        } catch (UserExistsException $e) {
+            return new ErrorResource($e->getMessage(), statusCode: 409);
+        }
+        catch (Throwable) {
             return new ErrorResource(statusCode: 500);
         }
     }
