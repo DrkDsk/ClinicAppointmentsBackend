@@ -4,7 +4,6 @@ namespace App\Factories;
 
 use App\Classes\DTOs\Patient\CreatePatientDTO;
 use App\Classes\DTOs\Person\PersonDTO;
-use App\Classes\DTOs\User\CreateUserDTO;
 use App\Classes\Enum\HeightMeasureEnum;
 use App\Classes\Enum\WeightMeasureEnum;
 use Carbon\Carbon;
@@ -17,7 +16,6 @@ class CreatePatientDTOFactory
         $weightType = WeightMeasureEnum::tryFrom($request->patient["weight_measure_type"]) ?? WeightMeasureEnum::KILOGRAM;
         $heightType = HeightMeasureEnum::tryFrom($request->patient["height_measure_type"]) ?? HeightMeasureEnum::CENTIMETER;
 
-
         $personDto = new PersonDTO(
             name: $request->person["name"],
             email: $request->person["email"],
@@ -25,15 +23,15 @@ class CreatePatientDTOFactory
             phone: $request->person["phone"]
         );
 
+        $user = $request->user;
+
         return new CreatePatientDTO(
             person: $personDto,
             weight: $request->patient["weight"],
             height: $request->patient["height"],
             weightMeasureEnum: $weightType,
             heightMeasureEnum: $heightType,
-            user: $request->user ? new CreateUserDTO(
-                password: $request->user["password"]
-            ) : null
+            password: $user ? $request->user["password"] : null
         );
     }
 }

@@ -4,7 +4,6 @@ namespace App\Factories;
 
 use App\Classes\DTOs\Person\CreatePersonDTO;
 use App\Classes\DTOs\Person\PersonDTO;
-use App\Classes\DTOs\User\CreateUserDTO;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -22,8 +21,6 @@ class CreatePersonDTOFactory
             phone: $person['phone']
         );
 
-        $userDto = new CreateUserDTO($password);
-
-         return new CreatePersonDTO($personDto, $userDto);
+         return new CreatePersonDTO($personDto, $password);
     }
 }

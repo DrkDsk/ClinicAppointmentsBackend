@@ -3,7 +3,6 @@
 namespace App\Classes\DTOs\Patient;
 
 use App\Classes\DTOs\Person\PersonDTO;
-use App\Classes\DTOs\User\CreateUserDTO;
 use App\Classes\Enum\HeightMeasureEnum;
 use App\Classes\Enum\WeightMeasureEnum;
 
@@ -15,7 +14,7 @@ readonly class CreatePatientDTO
         public float             $height,
         public WeightMeasureEnum $weightMeasureEnum,
         public HeightMeasureEnum $heightMeasureEnum,
-        public ?CreateUserDTO     $user,
+        public ?string     $password = null,
         public ?int              $id = null,
     ) {
     }

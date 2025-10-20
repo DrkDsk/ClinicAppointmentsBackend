@@ -26,16 +26,16 @@ readonly class DoctorService implements DoctorServiceInterface
     public function create(CreateDoctorDTO $dto) : Doctor
     {
         $personData = $dto->person;
-        $userData = $dto->user;
+        $password = $dto->password;
         $specialty = $dto->specialty;
 
-        return DB::transaction(function () use ($personData, $userData, $specialty) {
+        return DB::transaction(function () use ($personData, $password, $specialty) {
 
             $person = $this->personService->store($personData);
 
-            if ($userData) {
+            if ($password) {
                 $this->userService->store(
-                    dto: $userData,
+                    password: $password,
                     email: $personData->email,
                     personId: $person->id,
                     role: Role::DOCTOR
