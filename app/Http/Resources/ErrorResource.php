@@ -12,7 +12,7 @@ class ErrorResource extends JsonResource
     private array $data;
     private int $statusCode;
 
-    public function __construct($message = "Ha ocurrido un error", $data = [], int $statusCode = 500)
+    public function __construct($message = "Se ha producido un error inesperado", $data = [], int $statusCode = 500)
     {
         $this->message = $message;
         $this->data = $data;

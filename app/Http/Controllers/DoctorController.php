@@ -28,7 +28,7 @@ class DoctorController extends Controller
         } catch (PersonAlreadyExistException $e) {
             return new ErrorResource(message: $e->getMessage(), statusCode: 409);
         } catch (Throwable) {
-            return new ErrorResource(message: "Se ha producido un error inesperado", statusCode: 409);
+            return new ErrorResource();
         }
     }
 }

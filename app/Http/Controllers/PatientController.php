@@ -28,7 +28,8 @@ class PatientController extends Controller
             return new PatientResource($patient);
         } catch (PersonAlreadyExistException $e) {
             return new ErrorResource(message: $e->getMessage(), statusCode: 409);
-        } catch (Throwable $e) {
+        } catch (Throwable) {
+            return new ErrorResource();
         }
     }
 }
