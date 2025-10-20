@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\EnrollUserRequest;
 use App\Http\Resources\ErrorResource;
 use App\Http\Resources\UserResource;
@@ -28,7 +27,7 @@ class UserController extends Controller
     public function enroll(Person $person, EnrollUserRequest $request)
     {
         if ($person->user) {
-            return new ErrorResource(message: "Este perfil ya tiene un usuario asignado");
+            return new ErrorResource(message: "Este perfil ya tiene un usuario asignado", statusCode: 409);
         }
 
         $user = $person->user()->create([
@@ -41,6 +40,10 @@ class UserController extends Controller
 
         if ($person->receptionist) {
             $user->syncRoles(RoleClass::RECEPTIONIST);
+        }
+
+        if ($person->patient) {
+            $user->syncRoles(RoleClass::PATIENT);
         }
 
         return new UserResource($user);

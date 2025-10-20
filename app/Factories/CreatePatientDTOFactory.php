@@ -25,17 +25,15 @@ class CreatePatientDTOFactory
             phone: $request->person["phone"]
         );
 
-        $dto = new CreatePatientDTO(
+        return new CreatePatientDTO(
             person: $personDto,
             weight: $request->patient["weight"],
             height: $request->patient["height"],
             weightMeasureEnum: $weightType,
             heightMeasureEnum: $heightType,
-            user: new CreateUserDTO(
+            user: $request->user ? new CreateUserDTO(
                 password: $request->user["password"]
-            )
+            ) : null
         );
-
-        return $dto;
     }
 }

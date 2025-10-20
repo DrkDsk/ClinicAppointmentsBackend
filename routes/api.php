@@ -20,7 +20,7 @@ Route::prefix('users/admin')
         });
 
         Route::prefix('receptionists')->group(function () {
-            Route::post('create/{person}', [ReceptionistController::class, 'store']);
+            Route::post('create', [ReceptionistController::class, 'store']);
         });
 
         Route::post('enroll/{person}', [UserController::class, 'enroll']);

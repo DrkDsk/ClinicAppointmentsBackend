@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Classes\DTOs\Receptionist\CreateReceptionistDTO;
-use App\Exceptions\ModelAlreadyExistsException;
+use App\Exceptions\PersonExistException;
+use App\Factories\CreatePersonDTOFactory;
+use App\Http\Requests\CreateReceptionsRequst;
+use App\Http\Resources\ErrorResource;
 use App\Http\Resources\ReceptionistResource;
 use App\Infrastructure\Services\ReceptionistService;
-use App\Models\Person;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Throwable;
 
 class ReceptionistController extends Controller
 {
@@ -15,15 +18,20 @@ class ReceptionistController extends Controller
     }
 
     /**
-     * @throws ModelAlreadyExistsException
+     * @throws Throwable
      */
-    public function store(Person $person): ReceptionistResource
+    public function store(CreateReceptionsRequst $request): JsonResource
     {
-        $dto = new CreateReceptionistDTO(
-            person_id: $person->id,
-            personEmail: $person->email
-        );
+        try {
+            $personData = CreatePersonDTOFactory::fromRequest($request);
 
-        return $this->service->store($dto);
+            $receptionist = $this->service->store($personData->personDTO, $personData->userDTO->password);
+
+            return new ReceptionistResource($receptionist);
+        } catch (PersonExistException $exception) {
+            return new ErrorResource(message: $exception->getMessage());
+        } catch (Throwable ) {
+            return new ErrorResource();
+        }
     }
 }

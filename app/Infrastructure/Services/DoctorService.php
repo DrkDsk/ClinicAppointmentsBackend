@@ -5,7 +5,7 @@ namespace App\Infrastructure\Services;
 use App\Classes\Const\Role;
 use App\Classes\DTOs\Doctor\CreateDoctorDTO;
 use App\Domain\Services\DoctorServiceInterface;
-use App\Exceptions\PersonAlreadyExistException;
+use App\Exceptions\PersonExistException;
 use App\Infrastructure\Persistence\EloquentDoctorRepository;
 use App\Models\Doctor;
 use Illuminate\Support\Facades\DB;
@@ -21,7 +21,7 @@ readonly class DoctorService implements DoctorServiceInterface
     }
 
     /**
-     * @throws PersonAlreadyExistException|Throwable
+     * @throws PersonExistException|Throwable
      */
     public function create(CreateDoctorDTO $dto) : Doctor
     {

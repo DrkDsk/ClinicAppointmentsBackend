@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Exceptions\PersonAlreadyExistException;
+use App\Exceptions\PersonExistException;
 use App\Factories\CreateDoctorDTOFactory;
 use App\Http\Requests\CreateDoctorRequest;
 use App\Http\Resources\DoctorResource;
@@ -25,7 +25,7 @@ class DoctorController extends Controller
             $doctor = $this->service->create($dto);
 
             return (new DoctorResource($doctor));
-        } catch (PersonAlreadyExistException $e) {
+        } catch (PersonExistException $e) {
             return new ErrorResource(message: $e->getMessage(), statusCode: 409);
         } catch (Throwable) {
             return new ErrorResource();

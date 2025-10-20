@@ -2,16 +2,15 @@
 
 namespace App\Infrastructure\Persistence;
 
-use App\Classes\DTOs\Receptionist\CreateReceptionistDTO;
 use App\Domain\Repositories\ReceptionistRepository;
 use App\Models\Receptionist;
 
 class EloquentReceptionistRepository implements ReceptionistRepository
 {
-    public function store(CreateReceptionistDTO $dto): Receptionist
+    public function store(string $personId): Receptionist
     {
         return Receptionist::create([
-            'person_id' => $dto->person_id
+            'person_id' => $personId
         ]);
     }
 

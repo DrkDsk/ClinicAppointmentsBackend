@@ -15,7 +15,7 @@ readonly class CreatePatientDTO
         public float             $height,
         public WeightMeasureEnum $weightMeasureEnum,
         public HeightMeasureEnum $heightMeasureEnum,
-        public CreateUserDTO     $user,
+        public ?CreateUserDTO     $user,
         public ?int              $id = null,
     ) {
     }

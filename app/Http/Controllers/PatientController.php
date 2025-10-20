@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Exceptions\PersonAlreadyExistException;
+use App\Exceptions\PersonExistException;
 use App\Factories\CreatePatientDTOFactory;
 use App\Http\Requests\CreatePatientRequest;
 use App\Http\Resources\ErrorResource;
@@ -20,13 +20,12 @@ class PatientController extends Controller
     public function store(CreatePatientRequest $request) : JsonResource
     {
         try {
-
             $dto = CreatePatientDTOFactory::fromRequest($request);
 
             $patient = $this->service->store($dto);
 
             return new PatientResource($patient);
-        } catch (PersonAlreadyExistException $e) {
+        } catch (PersonExistException $e) {
             return new ErrorResource(message: $e->getMessage(), statusCode: 409);
         } catch (Throwable) {
             return new ErrorResource();

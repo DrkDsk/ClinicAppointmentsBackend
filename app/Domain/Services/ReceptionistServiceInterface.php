@@ -2,10 +2,10 @@
 
 namespace App\Domain\Services;
 
-use App\Classes\DTOs\Receptionist\CreateReceptionistDTO;
-use App\Http\Resources\ReceptionistResource;
+use App\Classes\DTOs\Person\PersonDTO;
+use App\Models\Receptionist;
 
 interface ReceptionistServiceInterface
 {
-    public function store(CreateReceptionistDTO $dto): ReceptionistResource;
+    public function store(PersonDTO $dto, string $password): Receptionist;
 }
