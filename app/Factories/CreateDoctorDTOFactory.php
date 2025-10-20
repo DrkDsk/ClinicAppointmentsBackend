@@ -4,7 +4,6 @@ namespace App\Factories;
 
 use App\Classes\DTOs\Doctor\CreateDoctorDTO;
 use App\Classes\DTOs\Person\PersonDTO;
-use App\Classes\DTOs\User\CreateUserDTO;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -23,14 +22,12 @@ class CreateDoctorDTOFactory
             phone: $person['phone']
         );
 
-        $userDto = $user ? new CreateUserDTO(
-            password: $user['password']
-        ) : null;
+        $password = $user ? $user['password'] : null;
 
         return new CreateDoctorDTO(
             person: $personDto,
             specialty: $doctor['specialty'],
-            user: $userDto
+            password: $password
         );
     }
 }

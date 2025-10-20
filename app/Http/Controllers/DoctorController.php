@@ -19,7 +19,6 @@ class DoctorController extends Controller
     public function store(CreateDoctorRequest $request) : JsonResource
     {
         try {
-
             $dto = CreateDoctorDTOFactory::fromRequest($request);
 
             $doctor = $this->service->create($dto);
