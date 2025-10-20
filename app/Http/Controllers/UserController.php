@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\UserExistsException;
 use App\Http\Requests\EnrollUserRequest;
 use App\Http\Resources\ErrorResource;
 use App\Http\Resources\UserResource;
-use App\Infrastructure\Services\UserService;
+use App\Infrastructure\Services\EnrollService;
 use App\Models\Person;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use App\Classes\Const\Role as RoleClass;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Throwable;
 
 class UserController extends Controller
 {
-    public function __construct(private readonly UserService $service)
+    public function __construct(private readonly EnrollService $service)
     {
     }
 
@@ -23,29 +24,17 @@ class UserController extends Controller
 
         return new UserResource($user);
     }
-
-    public function enroll(Person $person, EnrollUserRequest $request)
+    public function enroll(Person $person, EnrollUserRequest $request) : JsonResource
     {
-        if ($person->user) {
-            return new ErrorResource(message: "Este perfil ya tiene un usuario asignado", statusCode: 409);
+        try {
+            $user = $this->service->enroll($person, $request->validated('user.password'));
+
+            return new UserResource($user);
+        } catch (UserExistsException $e) {
+            return new ErrorResource($e->getMessage(), statusCode: 409);
         }
-
-        $user = $person->user()->create([
-            'password' => Hash::make($request->password)
-        ]);
-
-        if ($person->doctor) {
-            $user->syncRoles(RoleClass::DOCTOR);
+        catch (Throwable) {
+            return new ErrorResource(statusCode: 500);
         }
-
-        if ($person->receptionist) {
-            $user->syncRoles(RoleClass::RECEPTIONIST);
-        }
-
-        if ($person->patient) {
-            $user->syncRoles(RoleClass::PATIENT);
-        }
-
-        return new UserResource($user);
     }
 }

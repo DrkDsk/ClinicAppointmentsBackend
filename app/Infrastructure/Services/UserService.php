@@ -2,8 +2,10 @@
 
 namespace App\Infrastructure\Services;
 
+use App\Classes\Const\Role as RoleClass;
 use App\Domain\Services\UserServiceInterface;
 use App\Infrastructure\Persistence\EloquentUserRepository;
+use App\Models\Person;
 use App\Models\User;
 
 readonly class UserService implements UserServiceInterface
@@ -26,5 +28,19 @@ readonly class UserService implements UserServiceInterface
         }
 
         return $user;
+    }
+
+    public function assignRoleTo(User $user, Person $person): void {
+        if ($person->doctor) {
+            $user->syncRoles(RoleClass::DOCTOR);
+        }
+
+        if ($person->receptionist) {
+            $user->syncRoles(RoleClass::RECEPTIONIST);
+        }
+
+        if ($person->patient) {
+            $user->syncRoles(RoleClass::PATIENT);
+        }
     }
 }
