@@ -2,7 +2,6 @@
 
 namespace App\Infrastructure\Persistence;
 
-use App\Classes\DTOs\User\CreateUserDTO;
 use App\Domain\Repositories\UserRepository;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;

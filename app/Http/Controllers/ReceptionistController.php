@@ -22,10 +22,10 @@ class ReceptionistController extends Controller
      */
     public function store(CreateReceptionsRequst $request): JsonResource
     {
-        $personData = CreatePersonDTOFactory::fromRequest($request);
-
         try {
-            $receptionist = $this->service->store($personData->personDTO, $personData->password);
+            $personData = CreatePersonDTOFactory::fromRequest($request);
+
+            $receptionist = $this->service->store($personData->personDTO, $personData->userDTO->password);
 
             return new ReceptionistResource($receptionist);
         } catch (PersonExistException $exception) {
