@@ -2,30 +2,27 @@
 
 namespace App\Infrastructure\Services;
 
-use App\Classes\DTOs\Receptionist\CreateReceptionistDTO;
+use App\Classes\DTOs\Person\PersonDTO;
 use App\Domain\Services\ReceptionistServiceInterface;
-use App\Exceptions\ModelAlreadyExistsException;
-use App\Http\Resources\ReceptionistResource;
 use App\Infrastructure\Persistence\EloquentReceptionistRepository;
 use App\Models\Receptionist;
+use Throwable;
 
 readonly class ReceptionistService implements ReceptionistServiceInterface
 {
-    public function __construct(protected EloquentReceptionistRepository $repository)
+    public function __construct(
+        protected PersonService $personService,
+        protected EloquentReceptionistRepository $repository)
     {
     }
 
     /**
-     * @throws ModelAlreadyExistsException
+     * @throws Throwable
      */
-    public function store(CreateReceptionistDTO $dto): ReceptionistResource
+    public function store(PersonDTO $dto, string $password): Receptionist
     {
-        if ($this->repository->existsByUser($dto->person_id)) {
-            throw new ModelAlreadyExistsException("El modelo:" . Receptionist::class . " ya está relacionado con el email: '$dto->personEmail'");
-        }
+        $person = $this->personService->store($dto);
 
-        $receptionist = $this->repository->store($dto);
-
-        return new ReceptionistResource($receptionist);
+        return $this->repository->store($person->id);
     }
 }

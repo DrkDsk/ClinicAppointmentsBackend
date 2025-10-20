@@ -40,8 +40,8 @@ class CreatePatientRequest extends FormRequest
             'patient.height_measure_type' => ['required', Rule::in(BodyMeasures::heightMeasureTypes())],
             'patient.weight_measure_type' => ['required', Rule::in(BodyMeasures::weightMeasureTypes())],
 
-            'user' => ['required', 'array'],
-            'user.password' => ['required', 'string']
+            'user' => ['nullable', 'array'],
+            'user.password' => ['required_with:user', 'string']
         ];
     }
 
