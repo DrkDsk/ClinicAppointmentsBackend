@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\RoleOrAdminMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -22,6 +23,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => RoleMiddleware::class,
             'permission' => PermissionMiddleware::class,
             'role_or_permission' => RoleOrPermissionMiddleware::class,
+            'role_or_admin' => RoleOrAdminMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
@@ -29,11 +31,5 @@ return Application::configure(basePath: dirname(__DIR__))
             return response()->json([
                 'error' => $e->getMessage()
             ], $e->getCode() ?: 403);
-        });
-
-        $exceptions->render(function (App\Exceptions\ModelAlreadyExistsException $e, $request) {
-            return response()->json([
-                'error' => $e->getMessage()
-            ], $e->getCode() ?: 409);
         });
     })->create();
