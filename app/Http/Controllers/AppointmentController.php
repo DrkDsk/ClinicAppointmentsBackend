@@ -17,7 +17,6 @@ class AppointmentController extends Controller
     }
 
     public function store(CreateAppointmentRequest $request) {
-
         try {
             $appointmentData = CreateAppointmentDTOFactory::fromRequest($request);
 
@@ -25,7 +24,7 @@ class AppointmentController extends Controller
 
             return new AppointmentResource($appointment);
         } catch (Throwable $exception) {
-            return new ErrorResource(message: $exception->getMessage());
+            return new ErrorResource(message: $exception->getMessage(), statusCode: 409);
         }
     }
 

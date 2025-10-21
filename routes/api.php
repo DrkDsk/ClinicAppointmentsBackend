@@ -11,7 +11,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 $receptionistRole = RoleClass::RECEPTIONIST;
-Route::prefix('users/admin')
+Route::prefix('users')
     ->middleware(['auth:sanctum', "role_or_admin:$receptionistRole"])->group(function () {
 
         Route::prefix('doctors')->group(function () {
@@ -27,14 +27,7 @@ Route::prefix('users/admin')
         });
 
         Route::post('enroll/{person}', [UserController::class, 'enroll']);
-    });
 
-Route::prefix('auth')->group(function () {
-    Route::post('login', [LoginController::class, 'login']);
-});
-
-Route::prefix('users')
-    ->middleware('auth:sanctum')->group(function () {
         Route::prefix('roles')->group(function () {
             Route::post('set', [RoleController::class, 'set']);
             Route::post('only', [RoleController::class, 'only']);
@@ -42,6 +35,10 @@ Route::prefix('users')
 
         Route::get('get', [UserController::class, 'get']);
     });
+
+Route::prefix('auth')->group(function () {
+    Route::post('login', [LoginController::class, 'login']);
+});
 
 Route::prefix('appointments')->middleware(['auth:sanctum', "role_or_admin:$receptionistRole"]) ->group(function () {
     Route::post('store', [AppointmentController::class, 'store']);
