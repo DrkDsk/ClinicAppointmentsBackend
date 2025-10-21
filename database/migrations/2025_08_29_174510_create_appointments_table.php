@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('type_appointment_id')->constrained('type_appointments');
             $table->enum('status', AppointmentsStatus::all());
             $table->text('note')->nullable();
-            $table->unique(['patient_id', 'doctor_id', 'schedule_at']);
+            $table->unique(['doctor_id', 'schedule_at']);
             $table->timestamps();
         });
     }
