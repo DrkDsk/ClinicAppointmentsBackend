@@ -26,6 +26,7 @@ class EloquentAppointmentRepository implements AppointmentRepository
     {
         return Appointment::where('doctor_id', $doctorId)
             ->where('schedule_at', $scheduleAt->format('Y-m-d H:i:s'))
+            ->lockForUpdate()
             ->first();
     }
 }
