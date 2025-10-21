@@ -1,5 +1,6 @@
 <?php
 
+use App\Classes\Const\Role as RoleClass;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DoctorController;
@@ -9,8 +10,11 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
+$adminRole = RoleClass::ADMIN;
+$receptionistRole = RoleClass::RECEPTIONIST;
+
 Route::prefix('users/admin')
-    ->middleware(['auth:sanctum', 'role:admin'])->group(function () {
+    ->middleware(['auth:sanctum', "role:$adminRole"])->group(function () {
 
         Route::prefix('doctors')->group(function () {
             Route::post('create', [DoctorController::class, 'store']);
@@ -25,10 +29,6 @@ Route::prefix('users/admin')
         });
 
         Route::post('enroll/{person}', [UserController::class, 'enroll']);
-
-        Route::prefix('appointments')->group(function () {
-            Route::post('store', [AppointmentController::class, 'store']);
-        });
     });
 
 Route::prefix('auth')->group(function () {
@@ -44,3 +44,7 @@ Route::prefix('users')
 
         Route::get('get', [UserController::class, 'get']);
     });
+
+Route::prefix('appointments')->middleware(['auth:sanctum', "role: $receptionistRole"])->group(function () {
+    Route::post('store', [AppointmentController::class, 'store']);
+});

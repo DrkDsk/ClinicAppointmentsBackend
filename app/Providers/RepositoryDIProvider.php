@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Domain\Repositories\AppoinmentRepository;
+use App\Domain\Repositories\AppointmentRepository;
 use App\Domain\Repositories\DoctorRepository;
 use App\Domain\Repositories\PatientRepository;
 use App\Domain\Repositories\PersonRepository;
@@ -28,7 +28,7 @@ class RepositoryDIProvider extends ServiceProvider
         $this->app->bind(PersonRepository::class, EloquentPersonRepository::class);
         $this->app->bind(PatientRepository::class, EloquentPatientRepository::class);
         $this->app->bind(ReceptionistRepository::class, EloquentReceptionistRepository::class);
-        $this->app->bind(AppoinmentRepository::class, EloquentAppointmentRepository::class);
+        $this->app->bind(AppointmentRepository::class, EloquentAppointmentRepository::class);
     }
 
     /**
