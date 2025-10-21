@@ -7,11 +7,11 @@ use App\Factories\CreateAppointmentDTOFactory;
 use App\Http\Requests\CreateAppointmentRequest;
 use App\Http\Resources\AppointmentResource;
 use App\Http\Resources\ErrorResource;
+use App\Models\Appointment;
 use Throwable;
 
 class AppointmentController extends Controller
 {
-
     public function __construct(protected readonly AppointmentServiceInterface $service)
     {
     }
@@ -27,5 +27,16 @@ class AppointmentController extends Controller
         } catch (Throwable $exception) {
             return new ErrorResource(message: $exception->getMessage());
         }
+    }
+
+    public function get() {
+        $appointments = $this->service->getAll();
+
+        return AppointmentResource::collection($appointments);
+    }
+
+    public function show(Appointment $appointment) {
+
+        return new AppointmentResource($appointment);
     }
 }

@@ -45,4 +45,6 @@ Route::prefix('users')
 
 Route::prefix('appointments')->middleware(['auth:sanctum', "role_or_admin:$receptionistRole"]) ->group(function () {
     Route::post('store', [AppointmentController::class, 'store']);
+    Route::get('get', [AppointmentController::class, 'get']);
+    Route::get('show/{appointment}', [AppointmentController::class, 'show']);
 });

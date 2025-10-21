@@ -13,7 +13,7 @@ class EloquentAppointmentRepository implements AppointmentRepository
     public function store(CreateAppointmentDTO $appointmentData): Appointment
     {
         return Appointment::create([
-            'schedule_at' => $appointmentData->scheduleAt->toDate(),
+            'schedule_at' => $appointmentData->scheduleAt->format('Y-m-d H:i:s'),
             'patient_id' => $appointmentData->patientId,
             'doctor_id' => $appointmentData->doctorId,
             'type_appointment_id' => $appointmentData->typeAppointmentId,
