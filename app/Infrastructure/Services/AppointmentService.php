@@ -7,6 +7,7 @@ use App\Domain\Repositories\AppointmentRepository;
 use App\Domain\Services\AppointmentServiceInterface;
 use App\Exceptions\AppointmentExistsException;
 use App\Models\Appointment;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
@@ -24,7 +25,7 @@ readonly class AppointmentService implements AppointmentServiceInterface
         return DB::transaction(function () use ($appointmentData) {
             $appointmentStored = $this->appointmentRepository->find(
                 doctorId: $appointmentData->doctorId,
-                scheduleAt: $appointmentData->scheduledAt
+                scheduledAt: $appointmentData->scheduledAt
             );
 
             if ($appointmentStored) {
@@ -36,5 +37,10 @@ readonly class AppointmentService implements AppointmentServiceInterface
 
             return $this->appointmentRepository->store($appointmentData);
         });
+    }
+
+    public function getAll() : LengthAwarePaginator
+    {
+        return Appointment::paginate(10);
     }
 }
