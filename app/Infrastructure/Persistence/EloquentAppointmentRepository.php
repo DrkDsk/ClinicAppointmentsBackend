@@ -22,10 +22,10 @@ class EloquentAppointmentRepository implements AppointmentRepository
         ]);
     }
 
-    public function find(string $doctorId, Carbon $scheduleAt): Appointment | null
+    public function find(string $doctorId, Carbon $scheduledAt): Appointment | null
     {
         return Appointment::where('doctor_id', $doctorId)
-            ->where('scheduled_at', $scheduleAt->format('Y-m-d H:i:s'))
+            ->where('scheduled_at', $scheduledAt->format('Y-m-d H:i:s'))
             ->lockForUpdate()
             ->first();
     }
