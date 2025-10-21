@@ -25,7 +25,7 @@ readonly class AppointmentService implements AppointmentServiceInterface
         return DB::transaction(function () use ($appointmentData) {
             $appointmentStored = $this->appointmentRepository->find(
                 doctorId: $appointmentData->doctorId,
-                scheduleAt: $appointmentData->scheduleAt
+                scheduleAt: $appointmentData->scheduledAt
             );
 
             if ($appointmentStored) {
