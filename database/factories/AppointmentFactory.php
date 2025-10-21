@@ -22,7 +22,7 @@ class AppointmentFactory extends Factory
     public function definition(): array
     {
         return [
-            'schedule_at' => $this->faker->dateTimeBetween('now', '+1 year'),
+            'scheduled_at' => $this->faker->dateTimeBetween('now', '+1 year'),
             'patient_id' => Patient::inRandomOrder()->first()->id ?? Patient::factory(),
             'doctor_id' => Doctor::inRandomOrder()->first()->id ?? Doctor::factory(),
             'type_appointment_id' => TypeAppointment::inRandomOrder()->first()->id ?? TypeAppointment::factory(),

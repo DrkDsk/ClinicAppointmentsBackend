@@ -13,7 +13,7 @@ class EloquentAppointmentRepository implements AppointmentRepository
     public function store(CreateAppointmentDTO $appointmentData): Appointment
     {
         return Appointment::create([
-            'schedule_at' => $appointmentData->scheduleAt->toDate(),
+            'scheduled_at' => $appointmentData->scheduledAt->toDate(),
             'patient_id' => $appointmentData->patientId,
             'doctor_id' => $appointmentData->doctorId,
             'type_appointment_id' => $appointmentData->typeAppointmentId,
@@ -25,7 +25,7 @@ class EloquentAppointmentRepository implements AppointmentRepository
     public function find(string $doctorId, Carbon $scheduleAt): Appointment | null
     {
         return Appointment::where('doctor_id', $doctorId)
-            ->where('schedule_at', $scheduleAt->format('Y-m-d H:i:s'))
+            ->where('scheduled_at', $scheduleAt->format('Y-m-d H:i:s'))
             ->lockForUpdate()
             ->first();
     }
