@@ -4,8 +4,10 @@ namespace App\Infrastructure\Services;
 
 use App\Classes\Const\Role;
 use App\Classes\DTOs\Person\PersonDTO;
+use App\Domain\Repositories\ReceptionistRepository;
+use App\Domain\Services\PersonServiceInterface;
 use App\Domain\Services\ReceptionistServiceInterface;
-use App\Infrastructure\Persistence\EloquentReceptionistRepository;
+use App\Domain\Services\UserServiceInterface;
 use App\Models\Receptionist;
 use Illuminate\Support\Facades\DB;
 use Throwable;
@@ -13,9 +15,9 @@ use Throwable;
 readonly class ReceptionistService implements ReceptionistServiceInterface
 {
     public function __construct(
-        protected PersonService $personService,
-        protected UserService $userService,
-        protected EloquentReceptionistRepository $repository)
+        protected PersonServiceInterface $personService,
+        protected UserServiceInterface $userService,
+        protected ReceptionistRepository $repository)
     {
     }
 

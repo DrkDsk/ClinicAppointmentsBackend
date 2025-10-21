@@ -14,12 +14,13 @@ return new class extends Migration
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
-            $table->datetime('date');
+            $table->datetime('schedule_at');
             $table->foreignId('patient_id')->constrained('patients');
             $table->foreignId('doctor_id')->constrained('doctors');
             $table->foreignId('type_appointment_id')->constrained('type_appointments');
             $table->enum('status', AppointmentsStatus::all());
             $table->text('note')->nullable();
+            $table->unique(['patient_id', 'doctor_id', 'schedule_at']);
             $table->timestamps();
         });
     }

@@ -5,8 +5,9 @@ namespace App\Infrastructure\Services;
 use App\Classes\Const\Role;
 use App\Classes\DTOs\Patient\CreatePatientDTO;
 use App\Domain\Services\PatientServiceInterface;
+use App\Domain\Services\PersonServiceInterface;
+use App\Domain\Services\UserServiceInterface;
 use App\Exceptions\PersonExistException;
-use App\Infrastructure\Persistence\EloquentPatientRepository;
 use App\Models\Patient;
 use Illuminate\Support\Facades\DB;
 use Throwable;
@@ -15,9 +16,9 @@ readonly class PatientService implements PatientServiceInterface
 {
 
     public function __construct(
-        protected EloquentPatientRepository $patientRepository,
-        private PersonService               $personService,
-        private UserService                 $userService
+        protected PersonServiceInterface $patientRepository,
+        private PersonServiceInterface $personService,
+        private UserServiceInterface   $userService
     ) {
     }
 

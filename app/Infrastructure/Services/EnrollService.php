@@ -2,6 +2,7 @@
 
 namespace App\Infrastructure\Services;
 
+use App\Domain\Services\UserServiceInterface;
 use App\Exceptions\UserExistsException;
 use App\Models\Person;
 use App\Models\User;
@@ -10,10 +11,9 @@ use Throwable;
 
 readonly class EnrollService
 {
-    public function __construct(private UserService $userService)
+    public function __construct(private UserServiceInterface $userService)
     {
     }
-
 
     /**
      * @throws Throwable

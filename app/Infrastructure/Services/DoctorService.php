@@ -4,9 +4,11 @@ namespace App\Infrastructure\Services;
 
 use App\Classes\Const\Role;
 use App\Classes\DTOs\Doctor\CreateDoctorDTO;
+use App\Domain\Repositories\DoctorRepository;
 use App\Domain\Services\DoctorServiceInterface;
+use App\Domain\Services\PersonServiceInterface;
+use App\Domain\Services\UserServiceInterface;
 use App\Exceptions\PersonExistException;
-use App\Infrastructure\Persistence\EloquentDoctorRepository;
 use App\Models\Doctor;
 use Illuminate\Support\Facades\DB;
 use Throwable;
@@ -14,9 +16,9 @@ use Throwable;
 readonly class DoctorService implements DoctorServiceInterface
 {
     public function __construct(
-        private EloquentDoctorRepository $repository,
-        private PersonService            $personService,
-        private UserService              $userService
+        private DoctorRepository $repository,
+        private PersonServiceInterface $personService,
+        private UserServiceInterface $userService
     ) {
     }
 

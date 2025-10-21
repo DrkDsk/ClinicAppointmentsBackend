@@ -3,19 +3,20 @@
 namespace App\Infrastructure\Services;
 
 use App\Classes\Const\Role as RoleClass;
+use App\Domain\Repositories\UserRepository;
 use App\Domain\Services\UserServiceInterface;
-use App\Infrastructure\Persistence\EloquentUserRepository;
 use App\Models\Person;
 use App\Models\User;
+use Throwable;
 
 readonly class UserService implements UserServiceInterface
 {
-    public function __construct(private EloquentUserRepository $repository)
+    public function __construct(private UserRepository $repository)
     {
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function store(string $password, string $email, int $personId, string $role): User
     {
