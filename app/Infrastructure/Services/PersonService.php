@@ -10,7 +10,6 @@ use App\Models\Person;
 
 readonly class PersonService implements PersonServiceInterface
 {
-
     public function __construct(private EloquentPersonRepository $repository)
     {
     }

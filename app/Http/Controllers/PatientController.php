@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Domain\Services\PatientServiceInterface;
 use App\Exceptions\PersonExistException;
 use App\Factories\CreatePatientDTOFactory;
 use App\Http\Requests\CreatePatientRequest;
 use App\Http\Resources\ErrorResource;
 use App\Http\Resources\PatientResource;
-use App\Infrastructure\Services\PatientService;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Throwable;
 
 class PatientController extends Controller
 {
-    public function __construct(protected readonly PatientService $service)
+    public function __construct(protected readonly PatientServiceInterface $service)
     {
     }
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PatientController;
@@ -24,6 +25,10 @@ Route::prefix('users/admin')
         });
 
         Route::post('enroll/{person}', [UserController::class, 'enroll']);
+
+        Route::prefix('appointments')->group(function () {
+            Route::post('store', [AppointmentController::class, 'store']);
+        });
     });
 
 Route::prefix('auth')->group(function () {
