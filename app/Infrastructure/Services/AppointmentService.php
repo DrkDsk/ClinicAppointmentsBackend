@@ -8,36 +8,33 @@ use App\Domain\Services\AppointmentServiceInterface;
 use App\Exceptions\AppointmentExistsException;
 use App\Models\Appointment;
 use Illuminate\Support\Facades\DB;
+use Throwable;
 
 readonly class AppointmentService implements AppointmentServiceInterface
 {
-    public function __construct(private readonly AppointmentRepository $appoinmentRepository)
+    public function __construct(private AppointmentRepository $appointmentRepository)
     {
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function store(CreateAppointmentDTO $appointmentData): Appointment
     {
-        dd($appointmentData);
         return DB::transaction(function () use ($appointmentData) {
-            $appointmentStored = $this->appoinmentRepository->find(
-                patientId: $appointmentData->patientId,
+            $appointmentStored = $this->appointmentRepository->find(
                 doctorId: $appointmentData->doctorId,
                 scheduleAt: $appointmentData->scheduleAt
             );
 
-            if ($appointmentStored->exists) {
-                $patientName = $appointmentStored->patient()->value('name');
-                $doctorName = $appointmentStored->doctor()->value('name');
-
-                $messageException = "Esta cita ya está programada para el paciente: $patientName con el doctor $doctorName";
+            if ($appointmentStored) {
+                $doctorName = $appointmentStored->doctor->person->name;
+                $messageException = "Esta cita ya está programada con el Doctor $doctorName";
 
                 throw new AppointmentExistsException($messageException);
             }
 
-            return $this->appoinmentRepository->store($appointmentData);
+            return $this->appointmentRepository->store($appointmentData);
         });
     }
 }

@@ -9,7 +9,5 @@ use Carbon\Carbon;
 interface AppointmentRepository
 {
     public function store(CreateAppointmentDTO $appointmentData): Appointment;
-    public function exists(string $patientId, string $doctorId, Carbon $scheduleAt): bool;
-
-    public function find(string $patientId, string $doctorId, Carbon $scheduleAt): Appointment;
+    public function find(string $doctorId, Carbon $scheduleAt): Appointment | null;
 }

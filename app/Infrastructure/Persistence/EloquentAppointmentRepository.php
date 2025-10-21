@@ -22,19 +22,9 @@ class EloquentAppointmentRepository implements AppointmentRepository
         ]);
     }
 
-    public function exists(string $patientId, string $doctorId, Carbon $scheduleAt): bool
+    public function find(string $doctorId, Carbon $scheduleAt): Appointment | null
     {
         return Appointment::where('doctor_id', $doctorId)
-            ->where('patient_id', $patientId)
-            ->where('schedule_at', $scheduleAt->format('Y-m-d H:i:s'))
-            ->lockForUpdate()
-            ->exists();
-    }
-
-    public function find(string $patientId, string $doctorId, Carbon $scheduleAt): Appointment
-    {
-        return Appointment::where('doctor_id', $doctorId)
-            ->where('patient_id', $patientId)
             ->where('schedule_at', $scheduleAt->format('Y-m-d H:i:s'))
             ->first();
     }
