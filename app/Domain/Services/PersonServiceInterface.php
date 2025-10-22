@@ -8,6 +8,6 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 interface PersonServiceInterface
 {
-    public function getAll() : LengthAwarePaginator;
+    public function getAllPaginate(int $perPage = 10) : LengthAwarePaginator;
     public function store(PersonDTO $personDTO): Person;
 }

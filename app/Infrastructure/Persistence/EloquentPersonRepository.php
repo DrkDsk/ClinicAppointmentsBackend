@@ -14,7 +14,7 @@ class EloquentPersonRepository implements PersonRepository
         return Person::create([
             'name' => $dto->name,
             'email' => $dto->email,
-            'birthday' => $dto->birthday,
+            'birthday' => $dto->birthday->format('Y-m-d'),
             'phone' => $dto->phone
         ]);
     }
@@ -24,8 +24,9 @@ class EloquentPersonRepository implements PersonRepository
         return Person::where($field, $value)->first();
     }
 
-    public function getAll(): LengthAwarePaginator
+
+    public function getAllPaginate(int $perPage): LengthAwarePaginator
     {
-        return Person::paginate(10);
+        return Person::paginate($perPage);
     }
 }

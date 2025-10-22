@@ -8,7 +8,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 interface PersonRepository
 {
-    public function getAll() : LengthAwarePaginator;
+    public function getAllPaginate(int $perPage) : LengthAwarePaginator;
     public function create(PersonDTO $dto): Person;
     public function existsByField(string $value, string $field = "phone"): ?Person;
 }

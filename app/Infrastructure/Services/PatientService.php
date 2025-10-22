@@ -39,13 +39,11 @@ readonly class PatientService implements PatientServiceInterface
             if ($password) {
                 $this->userService->store(
                     password: $password,
-                    email: $personData->email,
                     personId: $person->id,
                     role: Role::PATIENT
                 );
             }
 
-            $this->personService->store(personDTO: $personData);
             return $this->patientRepository->store(patientData: $patientData,personId: $person->id);
         });
     }
