@@ -5,6 +5,7 @@ namespace App\Infrastructure\Persistence;
 use App\Classes\DTOs\Patient\CreatePatientDTO;
 use App\Domain\Repositories\PatientRepository;
 use App\Models\Patient;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class EloquentPatientRepository implements PatientRepository
 {
@@ -22,5 +23,10 @@ class EloquentPatientRepository implements PatientRepository
     public function existsByUser(string $personId): bool
     {
         return Patient::where('person_id', $personId)->exists();
+    }
+
+    public function getAll(): LengthAwarePaginator
+    {
+        return Patient::paginate(10);
     }
 }
