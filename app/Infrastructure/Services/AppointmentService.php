@@ -41,6 +41,6 @@ readonly class AppointmentService implements AppointmentServiceInterface
 
     public function getAll() : LengthAwarePaginator
     {
-        return Appointment::paginate(10);
+        return $this->appointmentRepository->getAll();
     }
 }
