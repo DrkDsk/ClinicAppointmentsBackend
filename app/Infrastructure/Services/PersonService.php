@@ -7,6 +7,7 @@ use App\Domain\Repositories\PersonRepository;
 use App\Domain\Services\PersonServiceInterface;
 use App\Exceptions\PersonExistException;
 use App\Models\Person;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Throwable;
 
@@ -32,5 +33,10 @@ readonly class PersonService implements PersonServiceInterface
     public function getAllPaginate(int $perPage = 10): LengthAwarePaginator
     {
        return $this->repository->getAllPaginate($perPage);
+    }
+
+    public function search(string $query): Collection
+    {
+        return $this->repository->search($query);
     }
 }
