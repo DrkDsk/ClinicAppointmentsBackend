@@ -20,6 +20,9 @@ class PeopleController extends Controller
     public function search(SearchPeopleRequest $request) {
         $query = $request->input('query');
 
+        $persons = $this->personService->search($query);
+
+        return PersonResource::collection($persons);
     }
 
     public function get(Request $request): JsonResource
