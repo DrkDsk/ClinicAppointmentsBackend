@@ -7,6 +7,7 @@ use App\Classes\DTOs\Appointment\CreateAppointmentDTO;
 use App\Domain\Repositories\AppointmentRepository;
 use App\Models\Appointment;
 use Carbon\Carbon;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class EloquentAppointmentRepository implements AppointmentRepository
 {
@@ -28,5 +29,10 @@ class EloquentAppointmentRepository implements AppointmentRepository
             ->where('scheduled_at', $scheduledAt->format('Y-m-d H:i:s'))
             ->lockForUpdate()
             ->first();
+    }
+
+    public function getAll(): LengthAwarePaginator
+    {
+        return Appointment::paginate(10);
     }
 }
