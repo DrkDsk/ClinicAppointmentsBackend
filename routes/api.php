@@ -19,6 +19,7 @@ Route::prefix('users')
         });
 
         Route::prefix('patients')->group(function () {
+            Route::get('get',[PatientController::class, 'get']);
             Route::post('create', [PatientController::class, 'store']);
         });
 
