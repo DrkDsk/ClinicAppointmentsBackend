@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Services\PatientServiceInterface;
-use App\Exceptions\PersonExistException;
 use App\Factories\CreatePatientDTOFactory;
 use App\Http\Requests\CreatePatientRequest;
 use App\Http\Resources\ErrorResource;
@@ -17,6 +16,17 @@ class PatientController extends Controller
     {
     }
 
+    public function get()
+    {
+        try {
+            $patients = $this->service->getAll();
+
+            return PatientResource::collection($patients);
+        } catch (Throwable $exception) {
+            return ErrorResource::collection($exception->getMessage());
+        }
+    }
+
     public function store(CreatePatientRequest $request) : JsonResource
     {
         try {
@@ -25,10 +35,8 @@ class PatientController extends Controller
             $patient = $this->service->store($dto);
 
             return new PatientResource($patient);
-        } catch (PersonExistException $e) {
-            return new ErrorResource(message: $e->getMessage(), statusCode: 409);
-        } catch (Throwable) {
-            return new ErrorResource();
+        } catch (Throwable $e) {
+            return new ErrorResource(message: $e->getMessage());
         }
     }
 }
