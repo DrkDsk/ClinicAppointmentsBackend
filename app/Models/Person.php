@@ -30,4 +30,15 @@ class Person extends Model
     {
         return $this->hasOne(Doctor::class);
     }
+
+    public function scopeSearch($query, $term): void
+    {
+        $columns = ['name', 'email', 'phone'];
+
+        $query->where(function ($q) use ($term, $columns) {
+            foreach ($columns as $column) {
+                $q->orWhereRaw("LOWER($column) LIKE ?", ["%$term%"]);
+            }
+        });
+    }
 }
