@@ -5,6 +5,7 @@ namespace App\Infrastructure\Persistence;
 use App\Classes\DTOs\Person\PersonDTO;
 use App\Domain\Repositories\PersonRepository;
 use App\Models\Person;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class EloquentPersonRepository implements PersonRepository
 {
@@ -21,5 +22,10 @@ class EloquentPersonRepository implements PersonRepository
     public function existsByField(string $value, string $field = "phone"): ?Person
     {
         return Person::where($field, $value)->first();
+    }
+
+    public function getAll(): LengthAwarePaginator
+    {
+        return Person::paginate(10);
     }
 }
