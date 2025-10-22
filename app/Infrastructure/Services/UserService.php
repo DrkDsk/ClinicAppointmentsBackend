@@ -18,15 +18,11 @@ readonly class UserService implements UserServiceInterface
     /**
      * @throws Throwable
      */
-    public function store(string $password, string $email, int $personId, string $role): User
+    public function store(string $password, int $personId, string $role): User
     {
-        $user = $this->repository->existsByPerson($email);
-
-        if (!$user) {
-            $user = $this->repository->store($password, $personId);
-            $user->syncRoles($role);
-            $user->save();
-        }
+        $user = $this->repository->store($password, $personId);
+        $user->syncRoles($role);
+        $user->save();
 
         return $user;
     }
