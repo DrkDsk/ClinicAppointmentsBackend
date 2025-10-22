@@ -5,6 +5,8 @@ namespace App\Infrastructure\Persistence;
 use App\Classes\DTOs\Person\PersonDTO;
 use App\Domain\Repositories\PersonRepository;
 use App\Models\Person;
+
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class EloquentPersonRepository implements PersonRepository
@@ -28,5 +30,10 @@ class EloquentPersonRepository implements PersonRepository
     public function getAllPaginate(int $perPage): LengthAwarePaginator
     {
         return Person::paginate($perPage);
+    }
+
+    public function search(string $query) : Collection
+    {
+        return Person::search($query)->get();
     }
 }
