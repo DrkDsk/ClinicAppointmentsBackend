@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Classes\Const\Specialty;
+use App\Classes\Const\Specialties;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -37,7 +37,7 @@ class CreateDoctorRequest extends FormRequest
                 function ($attribute, $value, $fail) {
                     $normalized = strtolower($value);
 
-                    $match = collect(Specialty::all())->first(function ($item) use ($normalized) {
+                    $match = collect(Specialties::all())->first(function ($item) use ($normalized) {
                         return strtolower($item) === $normalized;
                     });
 

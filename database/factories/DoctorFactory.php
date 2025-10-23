@@ -2,12 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Classes\Const\Specialty;
+use App\Classes\Const\Specialties;
 use App\Models\Doctor;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Doctor>
+ * @extends Factory<Doctor>
  */
 class DoctorFactory extends Factory
 {
@@ -20,7 +20,7 @@ class DoctorFactory extends Factory
     public function definition(): array
     {
         return [
-            'specialty' => fake()->randomElement(Specialty::all())
+            'specialty' => fake()->randomElement(Specialties::all())
         ];
     }
 }

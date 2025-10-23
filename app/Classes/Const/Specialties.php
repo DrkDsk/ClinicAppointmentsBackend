@@ -2,7 +2,7 @@
 
 namespace App\Classes\Const;
 
-final class Specialty
+final class Specialties
 {
     public const GENERAL_DENTISTRY = 'Odontología general';
     public const ORTHODONTICS = 'Ortodoncia';

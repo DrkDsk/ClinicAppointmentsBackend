@@ -13,9 +13,9 @@ class TreatmentSeeder extends Seeder
      */
     public function run(): void
     {
-        $treatMents = collect(TreatmentsCatalog::TREATMENTS);
+        $treatments = collect(TreatmentsCatalog::TREATMENTS);
 
-        $data = $treatMents->map(function ($plan) {
+        $data = $treatments->map(function ($plan) {
             return [
                 'plan' => $plan["nombre"],
                 'category' => $plan["categoria"],
