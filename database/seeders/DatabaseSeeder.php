@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             PermissionSeeder::class,
             RoleSeeder::class,
+            SpecialtySeeder::class,
             PersonSeeder::class,
             TypeAppointmentSeeder::class,
             AppointmentSeeder::class,
@@ -21,7 +22,7 @@ class DatabaseSeeder extends Seeder
             TreatmentSeeder::class,
             TreatmentsPatientSeeder::class,
             PaymentsTreatmentsAppointmentsSeeder::class,
-            ProcedureSeeder::class
+            ProcedureSeeder::class,
         ]);
     }
 }
