@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Classes\Const\Role as RoleClass;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Person>
+ * @extends Factory<Person>
  */
 class PersonFactory extends Factory
 {

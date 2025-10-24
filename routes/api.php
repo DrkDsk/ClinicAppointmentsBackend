@@ -8,6 +8,7 @@ use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PeopleController;
 use App\Http\Controllers\ReceptionistController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SpecialtyController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,7 @@ Route::middleware(['auth:sanctum', "role_or_admin:$receptionistRole"])->group(fu
 
     Route::prefix('doctors')->group(function () {
         Route::post('create', [DoctorController::class, 'store']);
+        Route::get('specialties', [SpecialtyController::class, 'get']);
     });
 
     Route::prefix('patients')->group(function () {

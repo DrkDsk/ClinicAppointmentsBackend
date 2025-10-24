@@ -9,10 +9,10 @@ class ErrorResource extends JsonResource
 {
 
     private string $message;
-    private array $data;
+    private ?array $data;
     private int $statusCode;
 
-    public function __construct($message = "Se ha producido un error inesperado", $data = [], int $statusCode = 500)
+    public function __construct($message = "Se ha producido un error inesperado", $data = null, int $statusCode = 500)
     {
         $this->message = $message;
         $this->data = $data;
@@ -21,15 +21,10 @@ class ErrorResource extends JsonResource
 
     public function toArray(Request $request): array
     {
-        $response = [
-            "message" => $this->message
+        return [
+            'data' => $this->data,
+            'message' => $this->message,
         ];
-
-        if (count($this->data)) {
-           $response['data'] = $this->data;
-        }
-
-        return $response;
     }
 
     public function withResponse($request, $response): void

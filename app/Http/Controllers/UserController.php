@@ -18,9 +18,13 @@ class UserController extends Controller
     {
     }
 
-    public function get(Request $request): UserResource
+    public function get(Request $request): JsonResource
     {
         $user = $request->user();
+
+        if (!$user) {
+            return new ErrorResource("El usuario no está autenticado", statusCode: 403);
+        }
 
         return new UserResource($user);
     }
