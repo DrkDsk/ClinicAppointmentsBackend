@@ -30,8 +30,9 @@ readonly class PersonService implements PersonServiceInterface
         return $this->repository->create($personDTO);
     }
 
-    public function getAllPaginate(int $perPage = 10): LengthAwarePaginator
+    public function getAllPaginate(?int $perPage): LengthAwarePaginator
     {
+        $perPage = $perPage ?? 10;
        return $this->repository->getAllPaginate($perPage);
     }
 

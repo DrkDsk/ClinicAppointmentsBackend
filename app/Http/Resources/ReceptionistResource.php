@@ -16,7 +16,7 @@ class ReceptionistResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'person' => new PersonResource($this->person)
+            'person' => new ProfileResource($this->person)
         ];
     }
 }

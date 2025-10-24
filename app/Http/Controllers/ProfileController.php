@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use App\Domain\Services\PersonServiceInterface;
 use App\Http\Requests\SearchPeopleRequest;
 use App\Http\Resources\ErrorResource;
-use App\Http\Resources\PersonResource;
+use App\Http\Resources\ProfileResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Throwable;
 
-class PeopleController extends Controller
+class ProfileController extends Controller
 {
 
     public function __construct(private readonly PersonServiceInterface $personService)
@@ -22,7 +22,7 @@ class PeopleController extends Controller
 
         $persons = $this->personService->search($query);
 
-        return PersonResource::collection($persons);
+        return ProfileResource::collection($persons);
     }
 
     public function get(Request $request): JsonResource
@@ -32,7 +32,7 @@ class PeopleController extends Controller
             $perPage = $request->perPage;
             $people = $this->personService->getAllPaginate($perPage);
 
-            return PersonResource::collection($people);
+            return ProfileResource::collection($people);
         } catch (Throwable $e) {
             return new ErrorResource(message: $e->getMessage());
         }

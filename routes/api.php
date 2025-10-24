@@ -5,7 +5,7 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PatientController;
-use App\Http\Controllers\PeopleController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReceptionistController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SpecialtyController;
@@ -16,11 +16,12 @@ $receptionistRole = RoleClass::RECEPTIONIST;
 Route::middleware(['auth:sanctum', "role_or_admin:$receptionistRole"])->group(function () {
 
     Route::prefix('people')->group(function () {
-        Route::get('get', [PeopleController::class, 'get']);
-        Route::post('search', [PeopleController::class, 'search']);
+        Route::get('get', [ProfileController::class, 'get']);
+        Route::post('search', [ProfileController::class, 'search']);
     });
 
     Route::prefix('doctors')->group(function () {
+        Route::get('get', [DoctorController::class, 'get']);
         Route::post('create', [DoctorController::class, 'store']);
         Route::get('specialties', [SpecialtyController::class, 'get']);
     });
