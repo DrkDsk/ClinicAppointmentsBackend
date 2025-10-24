@@ -20,7 +20,7 @@ class PatientResource extends JsonResource
             "height" => $this->height,
             "weight_measure_type" => $this->weight_measure_type,
             "height_measure_type" => $this->height_measure_type,
-            'person' => new PersonResource($this->person),
+            'person' => new ProfileResource($this->person),
         ];
     }
 }

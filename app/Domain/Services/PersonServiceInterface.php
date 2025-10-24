@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 interface PersonServiceInterface
 {
-    public function getAllPaginate(int $perPage = 10) : LengthAwarePaginator;
+    public function getAllPaginate(?int $perPage) : LengthAwarePaginator;
     public function store(PersonDTO $personDTO): Person;
 
     public function search(string $query) : Collection;
