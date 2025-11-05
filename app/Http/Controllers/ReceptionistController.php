@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Services\ReceptionistServiceInterface;
-use App\Exceptions\PersonExistException;
 use App\Factories\CreatePersonDTOFactory;
 use App\Http\Requests\CreateReceptionsRequst;
 use App\Http\Resources\ErrorResource;
@@ -28,8 +27,6 @@ class ReceptionistController extends Controller
             $receptionist = $this->service->store($personData->personDTO, $personData->password);
 
             return new ReceptionistResource($receptionist);
-        } catch (PersonExistException $exception) {
-            return new ErrorResource(message: $exception->getMessage());
         } catch (Throwable ) {
             return new ErrorResource();
         }

@@ -49,6 +49,7 @@ Route::middleware(['auth:sanctum', "role_or_admin:$receptionistRole"])->group(fu
 
 Route::prefix('auth')->group(function () {
     Route::post('login', [LoginController::class, 'login']);
+    Route::post('logout', [LoginController::class, 'logout']);
     Route::get('get', [UserController::class, 'get']);
     Route::post('enroll/{person}', [UserController::class, 'enroll']);
 });

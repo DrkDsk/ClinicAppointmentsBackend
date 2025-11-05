@@ -17,6 +17,7 @@ class ErrorResource extends JsonResource
         $this->message = $message;
         $this->data = $data;
         $this->statusCode = $statusCode;
+        parent::__construct($data);
     }
 
     public function toArray(Request $request): array

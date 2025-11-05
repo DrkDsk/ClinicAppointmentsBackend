@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Auth;
 use App\Domain\Repositories\PersonRepository;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Resources\AuthResource;
+use App\Http\Resources\ErrorResource;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -15,21 +18,34 @@ class LoginController extends Controller
     {
     }
 
-    public function login(LoginRequest $request)
+    public function login(LoginRequest $request): ErrorResource|AuthResource
     {
-        $person = $this->personRepository->existsByField(value: $request->email, field: "email");
+        $email = $request->input('email');
+        $password = $request->input('password');
+
+        $person = $this->personRepository->existsByField(value: $email, field: "email");
         $user = $person?->user;
-        $isValid = $user && Hash::check($request->password, $user->password);
+        $isValid = $user && Hash::check($password, $user->password);
 
         if (!$isValid) {
-            throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
-            ]);
+            return new ErrorResource("Credenciales incorrectas", statusCode: 401);
         }
 
         $token = $user->createToken("")->plainTextToken;
-        $roles = $user->roles;
 
-        return response()->json(['token' => $token, 'roles' => $roles]);
+        return new AuthResource(
+            message: "Login exitoso",
+            token: $token,
+            user: $user,
+        );
+    }
+
+    public function logout(Request $request): JsonResponse
+    {
+        $request->user()->tokens()->delete();
+
+        return response()->json([
+            'message' => 'Sesión cerrada correctamente',
+        ]);
     }
 }
