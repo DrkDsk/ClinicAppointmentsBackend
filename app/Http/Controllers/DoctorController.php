@@ -8,6 +8,7 @@ use App\Factories\CreateDoctorDTOFactory;
 use App\Http\Requests\CreateDoctorRequest;
 use App\Http\Resources\DoctorResource;
 use App\Http\Resources\ErrorResource;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Request;
 use Throwable;
@@ -18,7 +19,7 @@ class DoctorController extends Controller
 
     public function __construct(private readonly DoctorServiceInterface $service) {}
 
-    public function get(Request $request)
+    public function get(Request $request): AnonymousResourceCollection
     {
         $perPage = $request->perPage;
         $doctors = $this->service->getAllPaginate($perPage);

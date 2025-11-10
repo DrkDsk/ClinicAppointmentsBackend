@@ -4,11 +4,10 @@ namespace App\Infrastructure\Services;
 
 use App\Classes\Const\Role;
 use App\Classes\DTOs\Doctor\CreateDoctorDTO;
-use App\Domain\Repositories\DoctorRepository;
+use App\Domain\Repositories\DoctorRepositoryInterface;
 use App\Domain\Services\DoctorServiceInterface;
 use App\Domain\Services\PersonServiceInterface;
 use App\Domain\Services\UserServiceInterface;
-use App\Exceptions\PersonExistException;
 use App\Models\Doctor;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
@@ -17,14 +16,14 @@ use Throwable;
 readonly class DoctorService implements DoctorServiceInterface
 {
     public function __construct(
-        private DoctorRepository $repository,
-        private PersonServiceInterface $personService,
-        private UserServiceInterface $userService
+        private DoctorRepositoryInterface $repository,
+        private PersonServiceInterface    $personService,
+        private UserServiceInterface      $userService
     ) {
     }
 
     /**
-     * @throws PersonExistException|Throwable
+     * @throws Throwable
      */
     public function create(CreateDoctorDTO $dto) : Doctor
     {
@@ -34,7 +33,7 @@ readonly class DoctorService implements DoctorServiceInterface
 
         return DB::transaction(function () use ($personData, $password, $specialty) {
 
-            $person = $this->personService->store($personData);
+            $person = $this->personService->create($personData);
 
             if ($password) {
                 $this->userService->store(
@@ -44,14 +43,17 @@ readonly class DoctorService implements DoctorServiceInterface
                 );
             }
 
-            return $this->repository->create($person->id, $specialty);
+            return $this->repository->create([
+                'person_id' => $person->id,
+                'specialty' => $specialty
+            ]);
         });
     }
 
     public function getAllPaginate(?int $perPage): LengthAwarePaginator
     {
         $perPage = $perPage ?? 10;
-       return $this->repository->getAllPaginate($perPage);
+        return $this->repository->paginate($perPage);
     }
 }
 

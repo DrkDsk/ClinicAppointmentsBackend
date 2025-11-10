@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Domain\Repositories\PersonRepository;
+use App\Domain\Repositories\PersonRepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Resources\AuthResource;
@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 class LoginController extends Controller
 {
 
-    public function __construct(private readonly PersonRepository $personRepository)
+    public function __construct(private readonly PersonRepositoryInterface $personRepository)
     {
     }
 

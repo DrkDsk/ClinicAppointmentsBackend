@@ -27,7 +27,7 @@ readonly class ReceptionistService implements ReceptionistServiceInterface
     public function store(PersonDTO $dto, string $password): Receptionist
     {
         return DB::transaction(function () use ($dto, $password) {
-            $person = $this->personService->store($dto);
+            $person = $this->personService->create($dto);
             $personId = $person->id;
 
             $this->userService->store($password, $dto->email, $personId, Role::RECEPTIONIST);

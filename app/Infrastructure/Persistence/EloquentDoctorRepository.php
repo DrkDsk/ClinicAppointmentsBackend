@@ -2,23 +2,14 @@
 
 namespace App\Infrastructure\Persistence;
 
-use App\Classes\DTOs\Doctor\CreateDoctorDTO;
-use App\Domain\Repositories\DoctorRepository;
+use App\Domain\Repositories\DoctorRepositoryInterface;
 use App\Models\Doctor;
-use Illuminate\Pagination\LengthAwarePaginator;
+use App\Repositories\Eloquent\BaseRepository;
 
-class EloquentDoctorRepository implements DoctorRepository
+class EloquentDoctorRepository extends BaseRepository implements DoctorRepositoryInterface
 {
-    public function create(string $personId, string $specialty): Doctor
+    public function __construct(Doctor $model)
     {
-        return Doctor::create([
-            'person_id' => $personId,
-            'specialty' => $specialty
-        ]);
-    }
-
-    public function getAllPaginate(int $perPage): LengthAwarePaginator
-    {
-        return Doctor::with(['person'])->paginate($perPage);
+        parent::__construct($model);
     }
 }
