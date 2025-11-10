@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Services\DoctorServiceInterface;
-use App\Exceptions\PersonExistException;
 use App\Factories\CreateDoctorDTOFactory;
 use App\Http\Requests\CreateDoctorRequest;
 use App\Http\Resources\DoctorResource;
@@ -21,7 +20,7 @@ class DoctorController extends Controller
 
     public function get(Request $request): AnonymousResourceCollection
     {
-        $perPage = $request->perPage;
+        $perPage = $request->input('perPage');
         $doctors = $this->service->getAllPaginate($perPage);
 
         return DoctorResource::collection($doctors);
@@ -35,8 +34,6 @@ class DoctorController extends Controller
             $doctor = $this->service->create($dto);
 
             return (new DoctorResource($doctor));
-        } catch (PersonExistException $e) {
-            return new ErrorResource(message: $e->getMessage(), statusCode: 409);
         } catch (Throwable) {
             return new ErrorResource();
         }

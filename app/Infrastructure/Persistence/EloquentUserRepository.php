@@ -2,24 +2,14 @@
 
 namespace App\Infrastructure\Persistence;
 
-use App\Domain\Repositories\UserRepository;
+use App\Domain\Repositories\UserRepositoryInterface;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+use App\Repositories\Eloquent\BaseRepository;
 
-class EloquentUserRepository implements UserRepository
+class EloquentUserRepository extends BaseRepository implements UserRepositoryInterface
 {
-    public function store(string $password, int $personId): User
+    public function __construct(User $model)
     {
-        return User::create([
-            'person_id' => $personId,
-            'password' => Hash::make($password),
-        ]);
-    }
-
-    public function existsByPerson(string $email): ?User
-    {
-        return User::whereHas('person', function ($query) use ($email) {
-            $query->where('email', $email);
-        })->first();
+        parent::__construct($model);
     }
 }

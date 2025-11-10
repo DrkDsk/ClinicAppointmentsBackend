@@ -30,7 +30,7 @@ readonly class ReceptionistService implements ReceptionistServiceInterface
             $person = $this->personService->create($dto);
             $personId = $person->id;
 
-            $this->userService->store($password, $dto->email, $personId, Role::RECEPTIONIST);
+            $this->userService->create($password, $dto->email, $personId, Role::RECEPTIONIST);
 
             return $this->repository->store($personId);
        });

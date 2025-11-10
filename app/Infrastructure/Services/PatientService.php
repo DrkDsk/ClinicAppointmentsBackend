@@ -37,7 +37,7 @@ readonly class PatientService implements PatientServiceInterface
             $password = $patientData->password;
 
             if ($password) {
-                $this->userService->store(
+                $this->userService->create(
                     password: $password,
                     personId: $person->id,
                     role: Role::PATIENT

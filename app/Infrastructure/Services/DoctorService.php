@@ -36,7 +36,7 @@ readonly class DoctorService implements DoctorServiceInterface
             $person = $this->personService->create($personData);
 
             if ($password) {
-                $this->userService->store(
+                $this->userService->create(
                     password: $password,
                     personId: $person->id,
                     role: Role::DOCTOR
