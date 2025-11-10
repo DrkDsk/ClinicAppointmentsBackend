@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Domain\Repositories\AppointmentRepository;
-use App\Domain\Repositories\DoctorRepository;
+use App\Domain\Repositories\DoctorRepositoryInterface;
 use App\Domain\Repositories\PatientRepository;
 use App\Domain\Repositories\PersonRepository;
 use App\Domain\Repositories\ReceptionistRepository;
@@ -25,7 +25,7 @@ class RepositoryDIProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(DoctorRepository::class, EloquentDoctorRepository::class);
+        $this->app->bind(DoctorRepositoryInterface::class, EloquentDoctorRepository::class);
         $this->app->bind(UserRepository::class, EloquentUserRepository::class);
         $this->app->bind(PersonRepository::class, EloquentPersonRepository::class);
         $this->app->bind(PatientRepository::class, EloquentPatientRepository::class);

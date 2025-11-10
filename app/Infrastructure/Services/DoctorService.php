@@ -4,7 +4,7 @@ namespace App\Infrastructure\Services;
 
 use App\Classes\Const\Role;
 use App\Classes\DTOs\Doctor\CreateDoctorDTO;
-use App\Domain\Repositories\DoctorRepository;
+use App\Domain\Repositories\DoctorRepositoryInterface;
 use App\Domain\Services\DoctorServiceInterface;
 use App\Domain\Services\PersonServiceInterface;
 use App\Domain\Services\UserServiceInterface;
@@ -16,9 +16,9 @@ use Throwable;
 readonly class DoctorService implements DoctorServiceInterface
 {
     public function __construct(
-        private DoctorRepository $repository,
-        private PersonServiceInterface $personService,
-        private UserServiceInterface $userService
+        private DoctorRepositoryInterface $repository,
+        private PersonServiceInterface    $personService,
+        private UserServiceInterface      $userService
     ) {
     }
 
@@ -43,7 +43,10 @@ readonly class DoctorService implements DoctorServiceInterface
                 );
             }
 
-            return $this->repository->create($person->id, $specialty);
+            return $this->repository->create([
+                'person_id' => $person->id,
+                'specialty' => $specialty
+            ]);
         });
     }
 
