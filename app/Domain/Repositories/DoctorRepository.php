@@ -2,11 +2,8 @@
 
 namespace App\Domain\Repositories;
 
-use App\Models\Doctor;
-use Illuminate\Pagination\LengthAwarePaginator;
+use App\Repositories\Contract\BaseRepositoryInterface;
 
-interface DoctorRepository
+interface DoctorRepository extends BaseRepositoryInterface
 {
-    public function getAllPaginate(int $perPage) : LengthAwarePaginator;
-    public function create(string $personId, string $specialty): Doctor;
 }
