@@ -33,18 +33,19 @@ readonly class PatientService implements PatientServiceInterface
         return DB::transaction(function () use ($personData, $patientData) {
 
             $person = $this->personService->create($personData);
+            $personId = $person->getAttribute('id');
             $password = $patientData->password;
 
             if ($password) {
                 $this->userService->create(
                     password: $password,
-                    personId: $person->id,
+                    personId: $personId,
                     role: Role::PATIENT
                 );
             }
 
             return $this->patientRepository->create([
-                'person_id' => $person->id,
+                'person_id' => $personId,
                 'weight' => $patientData->weight,
                 'height' => $patientData->height,
                 'weight_measure_type' => $patientData->weightMeasureEnum,

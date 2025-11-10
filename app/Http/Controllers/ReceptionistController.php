@@ -27,8 +27,8 @@ class ReceptionistController extends Controller
             $receptionist = $this->service->create($personData->personDTO, $personData->password);
 
             return new ReceptionistResource($receptionist);
-        } catch (Throwable ) {
-            return new ErrorResource();
+        } catch (Throwable $e) {
+            return new ErrorResource(message: $e->getMessage());
         }
     }
 }

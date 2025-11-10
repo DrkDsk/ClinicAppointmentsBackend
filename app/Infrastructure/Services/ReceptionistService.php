@@ -28,7 +28,7 @@ readonly class ReceptionistService implements ReceptionistServiceInterface
     {
         return DB::transaction(function () use ($dto, $password) {
             $person = $this->personService->create($dto);
-            $personId = $person->id;
+            $personId = $person->getAttribute('id');
 
             $this->userService->create($password, $personId, Role::RECEPTIONIST);
 

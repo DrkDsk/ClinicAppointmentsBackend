@@ -34,17 +34,18 @@ readonly class DoctorService implements DoctorServiceInterface
         return DB::transaction(function () use ($personData, $password, $specialty) {
 
             $person = $this->personService->create($personData);
+            $personId = $person->getAttribute('id');
 
             if ($password) {
                 $this->userService->create(
                     password: $password,
-                    personId: $person->id,
+                    personId: $personId,
                     role: Role::DOCTOR
                 );
             }
 
             return $this->repository->create([
-                'person_id' => $person->id,
+                'person_id' => $personId,
                 'specialty' => $specialty
             ]);
         });

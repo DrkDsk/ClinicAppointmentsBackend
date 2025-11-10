@@ -23,7 +23,7 @@ class AppointmentController extends Controller
         try {
             $appointmentData = CreateAppointmentDTOFactory::fromRequest($request);
 
-            $appointment = $this->service->store($appointmentData);
+            $appointment = $this->service->create($appointmentData);
 
             return new AppointmentResource($appointment);
         } catch (Throwable $exception) {
