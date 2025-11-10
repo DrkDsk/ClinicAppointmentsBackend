@@ -4,18 +4,12 @@ namespace App\Infrastructure\Persistence;
 
 use App\Domain\Repositories\ReceptionistRepository;
 use App\Models\Receptionist;
+use App\Repositories\Eloquent\BaseRepository;
 
-class EloquentReceptionistRepository implements ReceptionistRepository
+class EloquentReceptionistRepository extends BaseRepository implements ReceptionistRepository
 {
-    public function store(string $personId): Receptionist
+    public function __construct(Receptionist $model)
     {
-        return Receptionist::create([
-            'person_id' => $personId
-        ]);
-    }
-
-    public function existsByUser(string $personId): bool
-    {
-        return Receptionist::where('person_id', $personId)->exists();
+        parent::__construct($model);
     }
 }

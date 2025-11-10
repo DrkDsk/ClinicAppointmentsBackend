@@ -7,6 +7,7 @@ use App\Factories\CreatePatientDTOFactory;
 use App\Http\Requests\CreatePatientRequest;
 use App\Http\Resources\ErrorResource;
 use App\Http\Resources\PatientResource;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Throwable;
 
@@ -16,10 +17,11 @@ class PatientController extends Controller
     {
     }
 
-    public function get()
+    public function get(): AnonymousResourceCollection
     {
         try {
-            $patients = $this->patientService->getAll();
+            $perPage = request()->input('perPage');
+            $patients = $this->patientService->getAllPaginate($perPage);
 
             return PatientResource::collection($patients);
         } catch (Throwable $exception) {
@@ -32,7 +34,7 @@ class PatientController extends Controller
         try {
             $dto = CreatePatientDTOFactory::fromRequest($request);
 
-            $patient = $this->patientService->store($dto);
+            $patient = $this->patientService->create($dto);
 
             return new PatientResource($patient);
         } catch (Throwable $e) {

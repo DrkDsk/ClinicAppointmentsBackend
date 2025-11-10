@@ -12,4 +12,9 @@ class EloquentUserRepository extends BaseRepository implements UserRepositoryInt
     {
         parent::__construct($model);
     }
+
+    public function getByRolesPaginated(string $role, int $perPage)
+    {
+        return $this->model->role($role)->paginate($perPage);
+    }
 }

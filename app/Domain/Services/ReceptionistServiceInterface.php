@@ -7,5 +7,5 @@ use App\Models\Receptionist;
 
 interface ReceptionistServiceInterface
 {
-    public function store(PersonDTO $dto, string $password): Receptionist;
+    public function create(PersonDTO $dto, string $password): Receptionist;
 }

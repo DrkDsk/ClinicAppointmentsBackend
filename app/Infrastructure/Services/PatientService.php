@@ -4,11 +4,10 @@ namespace App\Infrastructure\Services;
 
 use App\Classes\Const\Role;
 use App\Classes\DTOs\Patient\CreatePatientDTO;
-use App\Domain\Repositories\PatientRepository;
+use App\Domain\Repositories\PatientRepositoryInterface;
 use App\Domain\Services\PatientServiceInterface;
 use App\Domain\Services\PersonServiceInterface;
 use App\Domain\Services\UserServiceInterface;
-use App\Exceptions\PersonExistException;
 use App\Models\Patient;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
@@ -17,16 +16,16 @@ use Throwable;
 readonly class PatientService implements PatientServiceInterface
 {
     public function __construct(
-        private PatientRepository $patientRepository,
-        private PersonServiceInterface   $personService,
-        private UserServiceInterface     $userService
+        private PatientRepositoryInterface $patientRepository,
+        private PersonServiceInterface     $personService,
+        private UserServiceInterface       $userService
     ) {
     }
 
     /**
-     * @throws PersonExistException|Throwable
+     * @throws Throwable
      */
-    public function store(CreatePatientDTO $dto): Patient
+    public function create(CreatePatientDTO $dto): Patient
     {
         $personData = $dto->person;
         $patientData = $dto;
@@ -44,12 +43,19 @@ readonly class PatientService implements PatientServiceInterface
                 );
             }
 
-            return $this->patientRepository->store(patientData: $patientData,personId: $person->id);
+            return $this->patientRepository->create([
+                'person_id' => $person->id,
+                'weight' => $patientData->weight,
+                'height' => $patientData->height,
+                'weight_measure_type' => $patientData->weightMeasureEnum,
+                'height_measure_type' => $patientData->heightMeasureEnum
+            ]);
         });
     }
 
-    public function getAll(): LengthAwarePaginator
+    public function getAllPaginate(?int $perPage): LengthAwarePaginator
     {
-        return $this->patientRepository->getAll();
+        $perPage = $perPage ?? 10;
+        return $this->patientRepository->paginate($perPage);
     }
 }
