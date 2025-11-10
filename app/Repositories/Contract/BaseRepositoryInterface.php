@@ -4,9 +4,12 @@ namespace App\Repositories\Contract;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 interface BaseRepositoryInterface
 {
+    public function paginate(int $perPage) : LengthAwarePaginator;
+
     public function all(): Collection;
 
     public function find(int $id): ?Model;
