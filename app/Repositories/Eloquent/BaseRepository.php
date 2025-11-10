@@ -45,6 +45,6 @@ class BaseRepository implements BaseRepositoryInterface
 
     public function paginate(int $perPage): LengthAwarePaginator
     {
-        return $this->model->with(['person'])->paginate($perPage);
+        return $this->model->paginate($perPage);
     }
 }
