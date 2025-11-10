@@ -3,10 +3,10 @@
 namespace App\Infrastructure\Services;
 
 use App\Classes\DTOs\Person\PersonDTO;
-use App\Domain\Repositories\PersonRepositoryInterface;
-use App\Domain\Services\PersonServiceInterface;
 use App\Exceptions\PersonExistException;
 use App\Models\Person;
+use App\Repositories\Contract\PersonRepositoryInterface;
+use App\Services\Contract\PersonServiceInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;

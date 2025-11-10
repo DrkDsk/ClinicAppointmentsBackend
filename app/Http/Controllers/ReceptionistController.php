@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Domain\Services\ReceptionistServiceInterface;
 use App\Factories\CreatePersonDTOFactory;
 use App\Http\Requests\CreateReceptionsRequst;
 use App\Http\Resources\ErrorResource;
 use App\Http\Resources\ReceptionistResource;
+use App\Services\Contract\ReceptionistServiceInterface;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Throwable;
 
@@ -27,8 +27,8 @@ class ReceptionistController extends Controller
             $receptionist = $this->service->create($personData->personDTO, $personData->password);
 
             return new ReceptionistResource($receptionist);
-        } catch (Throwable ) {
-            return new ErrorResource();
+        } catch (Throwable $e) {
+            return new ErrorResource(message: $e->getMessage());
         }
     }
 }

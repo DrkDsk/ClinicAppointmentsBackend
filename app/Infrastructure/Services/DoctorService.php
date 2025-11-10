@@ -4,11 +4,11 @@ namespace App\Infrastructure\Services;
 
 use App\Classes\Const\Role;
 use App\Classes\DTOs\Doctor\CreateDoctorDTO;
-use App\Domain\Repositories\DoctorRepositoryInterface;
-use App\Domain\Services\DoctorServiceInterface;
-use App\Domain\Services\PersonServiceInterface;
-use App\Domain\Services\UserServiceInterface;
 use App\Models\Doctor;
+use App\Repositories\Contract\DoctorRepositoryInterface;
+use App\Services\Contract\DoctorServiceInterface;
+use App\Services\Contract\PersonServiceInterface;
+use App\Services\Contract\UserServiceInterface;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 use Throwable;
@@ -34,17 +34,18 @@ readonly class DoctorService implements DoctorServiceInterface
         return DB::transaction(function () use ($personData, $password, $specialty) {
 
             $person = $this->personService->create($personData);
+            $personId = $person->getAttribute('id');
 
             if ($password) {
                 $this->userService->create(
                     password: $password,
-                    personId: $person->id,
+                    personId: $personId,
                     role: Role::DOCTOR
                 );
             }
 
             return $this->repository->create([
-                'person_id' => $person->id,
+                'person_id' => $personId,
                 'specialty' => $specialty
             ]);
         });

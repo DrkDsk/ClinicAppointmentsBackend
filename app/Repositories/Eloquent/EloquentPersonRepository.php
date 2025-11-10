@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Infrastructure\Persistence;
+namespace App\Repositories\Eloquent;
 
-use App\Domain\Repositories\PersonRepositoryInterface;
 use App\Models\Person;
-
-use App\Repositories\Eloquent\BaseRepository;
+use App\Repositories\Contract\PersonRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
+
 class EloquentPersonRepository extends BaseRepository implements PersonRepositoryInterface
 {
 

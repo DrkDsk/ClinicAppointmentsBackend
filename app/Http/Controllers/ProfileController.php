@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Domain\Services\PersonServiceInterface;
 use App\Http\Requests\SearchPeopleRequest;
 use App\Http\Resources\ErrorResource;
 use App\Http\Resources\ProfileResource;
+use App\Services\Contract\PersonServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Throwable;

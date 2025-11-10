@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Domain\Services\AppointmentServiceInterface;
 use App\Factories\CreateAppointmentDTOFactory;
 use App\Http\Requests\CreateAppointmentRequest;
 use App\Http\Resources\AppointmentResource;
 use App\Http\Resources\ErrorResource;
 use App\Models\Appointment;
+use App\Services\Contract\AppointmentServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Throwable;
@@ -23,7 +23,7 @@ class AppointmentController extends Controller
         try {
             $appointmentData = CreateAppointmentDTOFactory::fromRequest($request);
 
-            $appointment = $this->service->store($appointmentData);
+            $appointment = $this->service->create($appointmentData);
 
             return new AppointmentResource($appointment);
         } catch (Throwable $exception) {

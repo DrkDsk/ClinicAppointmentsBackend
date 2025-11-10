@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Infrastructure\Persistence;
+namespace App\Repositories\Eloquent;
 
-use App\Domain\Repositories\DoctorRepositoryInterface;
 use App\Models\Doctor;
-use App\Repositories\Eloquent\BaseRepository;
+use App\Repositories\Contract\DoctorRepositoryInterface;
 
 class EloquentDoctorRepository extends BaseRepository implements DoctorRepositoryInterface
 {

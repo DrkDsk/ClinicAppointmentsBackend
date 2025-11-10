@@ -4,11 +4,11 @@ namespace App\Infrastructure\Services;
 
 use App\Classes\Const\Role;
 use App\Classes\DTOs\Patient\CreatePatientDTO;
-use App\Domain\Repositories\PatientRepositoryInterface;
-use App\Domain\Services\PatientServiceInterface;
-use App\Domain\Services\PersonServiceInterface;
-use App\Domain\Services\UserServiceInterface;
 use App\Models\Patient;
+use App\Repositories\Contract\PatientRepositoryInterface;
+use App\Services\Contract\PatientServiceInterface;
+use App\Services\Contract\PersonServiceInterface;
+use App\Services\Contract\UserServiceInterface;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 use Throwable;
@@ -33,18 +33,19 @@ readonly class PatientService implements PatientServiceInterface
         return DB::transaction(function () use ($personData, $patientData) {
 
             $person = $this->personService->create($personData);
+            $personId = $person->getAttribute('id');
             $password = $patientData->password;
 
             if ($password) {
                 $this->userService->create(
                     password: $password,
-                    personId: $person->id,
+                    personId: $personId,
                     role: Role::PATIENT
                 );
             }
 
             return $this->patientRepository->create([
-                'person_id' => $person->id,
+                'person_id' => $personId,
                 'weight' => $patientData->weight,
                 'height' => $patientData->height,
                 'weight_measure_type' => $patientData->weightMeasureEnum,

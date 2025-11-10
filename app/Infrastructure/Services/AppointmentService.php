@@ -4,10 +4,10 @@ namespace App\Infrastructure\Services;
 
 use App\Classes\Const\AppointmentsStatus;
 use App\Classes\DTOs\Appointment\CreateAppointmentDTO;
-use App\Domain\Repositories\AppointmentRepositoryInterface;
-use App\Domain\Services\AppointmentServiceInterface;
 use App\Exceptions\AppointmentExistsException;
 use App\Models\Appointment;
+use App\Repositories\Contract\AppointmentRepositoryInterface;
+use App\Services\Contract\AppointmentServiceInterface;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 use Throwable;
@@ -21,10 +21,10 @@ readonly class AppointmentService implements AppointmentServiceInterface
     /**
      * @throws Throwable
      */
-    public function store(CreateAppointmentDTO $appointmentData): Appointment
+    public function create(CreateAppointmentDTO $appointmentData): Appointment
     {
         return DB::transaction(function () use ($appointmentData) {
-            $scheduledAt = $appointmentData->scheduledAt->format('Y-m-d H:i:s');
+            $scheduledAt = $appointmentData->scheduledAt->format('Y-m-d H:i');
 
             $appointment = $this->appointmentRepository->findByScheduled(
                 doctorId: $appointmentData->doctorId,
@@ -39,7 +39,7 @@ readonly class AppointmentService implements AppointmentServiceInterface
             }
 
             return $this->appointmentRepository->create([
-                'scheduled_at' => $appointmentData->scheduledAt->format('Y-m-d H:i:s'),
+                'scheduled_at' => $scheduledAt,
                 'patient_id' => $appointmentData->patientId,
                 'doctor_id' => $appointmentData->doctorId,
                 'type_appointment_id' => $appointmentData->typeAppointmentId,
