@@ -8,6 +8,8 @@ use App\Http\Requests\CreateAppointmentRequest;
 use App\Http\Resources\AppointmentResource;
 use App\Http\Resources\ErrorResource;
 use App\Models\Appointment;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Throwable;
 
 class AppointmentController extends Controller
@@ -16,7 +18,8 @@ class AppointmentController extends Controller
     {
     }
 
-    public function store(CreateAppointmentRequest $request) {
+    public function store(CreateAppointmentRequest $request): ErrorResource|AppointmentResource
+    {
         try {
             $appointmentData = CreateAppointmentDTOFactory::fromRequest($request);
 
@@ -28,14 +31,16 @@ class AppointmentController extends Controller
         }
     }
 
-    public function get() {
-        $appointments = $this->service->getAll();
+    public function get(Request $request): AnonymousResourceCollection
+    {
+        $perPage = $request->input('perPage', 10);
+        $appointments = $this->service->getAllPaginated($perPage);
 
         return AppointmentResource::collection($appointments);
     }
 
-    public function show(Appointment $appointment) {
-
+    public function show(Appointment $appointment): AppointmentResource
+    {
         return new AppointmentResource($appointment);
     }
 }

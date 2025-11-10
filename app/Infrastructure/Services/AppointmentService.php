@@ -2,8 +2,9 @@
 
 namespace App\Infrastructure\Services;
 
+use App\Classes\Const\AppointmentsStatus;
 use App\Classes\DTOs\Appointment\CreateAppointmentDTO;
-use App\Domain\Repositories\AppointmentRepository;
+use App\Domain\Repositories\AppointmentRepositoryInterface;
 use App\Domain\Services\AppointmentServiceInterface;
 use App\Exceptions\AppointmentExistsException;
 use App\Models\Appointment;
@@ -13,7 +14,7 @@ use Throwable;
 
 readonly class AppointmentService implements AppointmentServiceInterface
 {
-    public function __construct(private AppointmentRepository $appointmentRepository)
+    public function __construct(private AppointmentRepositoryInterface $appointmentRepository)
     {
     }
 
@@ -23,24 +24,33 @@ readonly class AppointmentService implements AppointmentServiceInterface
     public function store(CreateAppointmentDTO $appointmentData): Appointment
     {
         return DB::transaction(function () use ($appointmentData) {
-            $appointmentStored = $this->appointmentRepository->find(
+            $scheduledAt = $appointmentData->scheduledAt->format('Y-m-d H:i:s');
+
+            $appointment = $this->appointmentRepository->findByScheduled(
                 doctorId: $appointmentData->doctorId,
-                scheduledAt: $appointmentData->scheduledAt
+                scheduledAt: $scheduledAt
             );
 
-            if ($appointmentStored) {
-                $doctorName = $appointmentStored->doctor->person->name;
-                $messageException = "Esta cita ya está programada con el Doctor $doctorName";
+            if ($appointment) {
+                $doctorName = $appointment->doctor->person->name;
+                $messageException = "El doctor: $doctorName ya tiene una cita programada para $scheduledAt";
 
                 throw new AppointmentExistsException($messageException);
             }
 
-            return $this->appointmentRepository->store($appointmentData);
+            return $this->appointmentRepository->create([
+                'scheduled_at' => $appointmentData->scheduledAt->format('Y-m-d H:i:s'),
+                'patient_id' => $appointmentData->patientId,
+                'doctor_id' => $appointmentData->doctorId,
+                'type_appointment_id' => $appointmentData->typeAppointmentId,
+                'note' => $appointmentData->note,
+                'status' => AppointmentsStatus::SCHEDULED
+            ]);
         });
     }
 
-    public function getAll() : LengthAwarePaginator
+    public function getAllPaginated(int $perPage) : LengthAwarePaginator
     {
-        return $this->appointmentRepository->getAll();
+        return $this->appointmentRepository->paginate($perPage);
     }
 }

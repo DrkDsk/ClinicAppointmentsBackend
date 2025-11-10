@@ -50,9 +50,8 @@ readonly class DoctorService implements DoctorServiceInterface
         });
     }
 
-    public function getAllPaginate(?int $perPage): LengthAwarePaginator
+    public function getAllPaginate(int $perPage): LengthAwarePaginator
     {
-        $perPage = $perPage ?? 10;
         return $this->repository->paginate($perPage);
     }
 }

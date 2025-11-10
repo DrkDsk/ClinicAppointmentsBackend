@@ -28,8 +28,7 @@ class ProfileController extends Controller
     public function get(Request $request): JsonResource
     {
         try {
-
-            $perPage = $request->perPage;
+            $perPage = $request->input('perPage', 10);
             $people = $this->personService->getAllPaginate($perPage);
 
             return ProfileResource::collection($people);

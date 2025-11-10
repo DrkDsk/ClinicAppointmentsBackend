@@ -20,7 +20,7 @@ class PatientController extends Controller
     public function get(): AnonymousResourceCollection
     {
         try {
-            $perPage = request()->input('perPage');
+            $perPage = request()->input('perPage', 10);
             $patients = $this->patientService->getAllPaginate($perPage);
 
             return PatientResource::collection($patients);

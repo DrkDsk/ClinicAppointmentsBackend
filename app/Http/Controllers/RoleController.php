@@ -26,7 +26,7 @@ class RoleController extends Controller
     public function only(GetRoleRequest $request): AnonymousResourceCollection
     {
         $role = $request->input('role');
-        $perPage = $request->input('perPage') ?? 20;
+        $perPage = $request->input('perPage', 10);
 
         $users = $this->userRepository->getByRolesPaginated($role, $perPage);
 

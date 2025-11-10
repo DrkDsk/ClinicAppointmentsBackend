@@ -8,6 +8,6 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 interface AppointmentServiceInterface
 {
-    public function getAll() : LengthAwarePaginator;
+    public function getAllPaginated(int $perPage) : LengthAwarePaginator;
     public function store(CreateAppointmentDTO $appointmentData) : Appointment;
 }

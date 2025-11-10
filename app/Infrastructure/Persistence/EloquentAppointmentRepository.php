@@ -2,37 +2,23 @@
 
 namespace App\Infrastructure\Persistence;
 
-use App\Classes\Const\AppointmentsStatus;
-use App\Classes\DTOs\Appointment\CreateAppointmentDTO;
-use App\Domain\Repositories\AppointmentRepository;
-use App\Models\Appointment;
-use Carbon\Carbon;
-use Illuminate\Pagination\LengthAwarePaginator;
 
-class EloquentAppointmentRepository implements AppointmentRepository
+use App\Domain\Repositories\AppointmentRepositoryInterface;
+use App\Models\Appointment;
+use App\Repositories\Eloquent\BaseRepository;
+
+class EloquentAppointmentRepository extends BaseRepository implements AppointmentRepositoryInterface
 {
-    public function store(CreateAppointmentDTO $appointmentData): Appointment
+    public function __construct(Appointment $model)
     {
-        return Appointment::create([
-            'scheduled_at' => $appointmentData->scheduledAt->format('Y-m-d H:i:s'),
-            'patient_id' => $appointmentData->patientId,
-            'doctor_id' => $appointmentData->doctorId,
-            'type_appointment_id' => $appointmentData->typeAppointmentId,
-            'note' => $appointmentData->note,
-            'status' => AppointmentsStatus::SCHEDULED
-        ]);
+        parent::__construct($model);
     }
 
-    public function find(string $doctorId, Carbon $scheduledAt): Appointment | null
+    public function findByScheduled(int $doctorId, string $scheduledAt): ?Appointment
     {
-        return Appointment::where('doctor_id', $doctorId)
-            ->where('scheduled_at', $scheduledAt->format('Y-m-d H:i:s'))
+        return $this->model->where('doctor_id', $doctorId)
+            ->where('scheduled_at', $scheduledAt)
             ->lockForUpdate()
             ->first();
-    }
-
-    public function getAll(): LengthAwarePaginator
-    {
-        return Appointment::paginate(10);
     }
 }
