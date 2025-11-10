@@ -14,4 +14,14 @@ readonly class PersonDTO
         public ?int   $id = null,
     ) {
     }
+
+    public function toArray(): array
+    {
+        return [
+            "name" => $this->name,
+            "email" => $this->email,
+            "birthday" => $this->birthday->format('Y-m-d'),
+            "phone" => $this->phone,
+        ];
+    }
 }
