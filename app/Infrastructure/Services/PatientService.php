@@ -53,9 +53,8 @@ readonly class PatientService implements PatientServiceInterface
         });
     }
 
-    public function getAllPaginate(?int $perPage): LengthAwarePaginator
+    public function getAllPaginate(int $perPage): LengthAwarePaginator
     {
-        $perPage = $perPage ?? 10;
         return $this->patientRepository->paginate($perPage);
     }
 }
