@@ -3,17 +3,18 @@
 namespace App\Infrastructure\Services;
 
 use App\Classes\DTOs\Person\PersonDTO;
-use App\Domain\Repositories\PersonRepository;
+use App\Domain\Repositories\PersonRepositoryInterface;
 use App\Domain\Services\PersonServiceInterface;
 use App\Exceptions\PersonExistException;
 use App\Models\Person;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
 use Throwable;
 
 readonly class PersonService implements PersonServiceInterface
 {
-    public function __construct(private PersonRepository $repository)
+    public function __construct(private PersonRepositoryInterface $repository)
     {
     }
 
@@ -21,19 +22,23 @@ readonly class PersonService implements PersonServiceInterface
      * @throws PersonExistException
      * @throws Throwable
      */
-    public function store(PersonDTO $personDTO): Person
+    public function create(PersonDTO $personDTO): Person
     {
         $person = $this->repository->existsByField(value: $personDTO->email, field: "email");
 
-        throw_if($person, new PersonExistException(message: "Este usuario ya se encuentra registrado"));
+        if ($person) {
+            throw new PersonExistException(message: "Este usuario ya se encuentra registrado");
+        }
 
-        return $this->repository->create($personDTO);
+        return DB::transaction(function () use ($personDTO) {
+            return $this->repository->create($personDTO->toArray());
+        });
     }
 
     public function getAllPaginate(?int $perPage): LengthAwarePaginator
     {
         $perPage = $perPage ?? 10;
-       return $this->repository->getAllPaginate($perPage);
+       return $this->repository->paginate($perPage);
     }
 
     public function search(string $query): Collection
