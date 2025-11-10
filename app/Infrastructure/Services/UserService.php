@@ -3,24 +3,30 @@
 namespace App\Infrastructure\Services;
 
 use App\Classes\Const\Role as RoleClass;
-use App\Domain\Repositories\UserRepository;
+use App\Domain\Repositories\UserRepositoryInterface;
 use App\Domain\Services\UserServiceInterface;
 use App\Models\Person;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Throwable;
 
 readonly class UserService implements UserServiceInterface
 {
-    public function __construct(private UserRepository $repository)
+    public function __construct(private UserRepositoryInterface $repository)
     {
     }
 
     /**
      * @throws Throwable
      */
-    public function store(string $password, int $personId, string $role): User
+    public function create(string $password, int $personId, string $role): User
     {
-        $user = $this->repository->store($password, $personId);
+        /** @var User $user */
+        $user = $this->repository->create([
+            'person_id' => $personId,
+            'password' => Hash::make($password),
+        ]);
+
         $user->syncRoles($role);
         $user->save();
 

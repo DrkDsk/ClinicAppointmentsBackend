@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Domain\Repositories\UserRepositoryInterface;
 use App\Http\Requests\CreateRoleRequest;
 use App\Http\Requests\GetRoleRequest;
 use App\Http\Resources\UserResource;
-use App\Models\User;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class RoleController extends Controller
 {
+
+    public function __construct(private readonly UserRepositoryInterface $userRepository)
+    {
+    }
+
     public function set(CreateRoleRequest $request): UserResource
     {
         $user = $request->user();
@@ -17,11 +23,12 @@ class RoleController extends Controller
         return new UserResource($user);
     }
 
-    public function only(GetRoleRequest $request)
+    public function only(GetRoleRequest $request): AnonymousResourceCollection
     {
-        $role = $request->role;
+        $role = $request->input('role');
+        $perPage = $request->input('perPage') ?? 20;
 
-        $users = User::role($role)->paginate(20);
+        $users = $this->userRepository->getByRolesPaginated($role, $perPage);
 
         return UserResource::collection($users);
     }

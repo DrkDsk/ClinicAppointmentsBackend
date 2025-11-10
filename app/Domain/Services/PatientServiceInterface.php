@@ -8,6 +8,6 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 interface PatientServiceInterface
 {
-    public function getAll() : LengthAwarePaginator;
-    public function store(CreatePatientDTO $dto): Patient;
+    public function getAllPaginate(?int $perPage) : LengthAwarePaginator;
+    public function create(CreatePatientDTO $dto): Patient;
 }

@@ -24,7 +24,7 @@ class ReceptionistController extends Controller
         try {
             $personData = CreatePersonDTOFactory::fromRequest($request);
 
-            $receptionist = $this->service->store($personData->personDTO, $personData->password);
+            $receptionist = $this->service->create($personData->personDTO, $personData->password);
 
             return new ReceptionistResource($receptionist);
         } catch (Throwable ) {
