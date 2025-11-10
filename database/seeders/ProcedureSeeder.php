@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Classes\Const\TreatmentsCatalog;
 use App\Models\Procedure;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class ProcedureSeeder extends Seeder
@@ -17,9 +16,9 @@ class ProcedureSeeder extends Seeder
         $procedures = collect(TreatmentsCatalog::TREATMENTS_PROCEDURES)
                         ->flatten()->unique()->values();
 
-        $data = $procedures->map(function ($procedimiento) {
+        $data = $procedures->map(function ($procedure) {
             return [
-                'name' => $procedimiento,
+                'name' => $procedure,
                 'description' => fake()->sentence(2)
             ];
         })->toArray();
