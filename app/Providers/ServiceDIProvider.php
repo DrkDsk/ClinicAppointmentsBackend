@@ -2,18 +2,18 @@
 
 namespace App\Providers;
 
-use App\Domain\Services\AppointmentServiceInterface;
-use App\Domain\Services\DoctorServiceInterface;
-use App\Domain\Services\PatientServiceInterface;
-use App\Domain\Services\PersonServiceInterface;
-use App\Domain\Services\ReceptionistServiceInterface;
-use App\Domain\Services\UserServiceInterface;
 use App\Infrastructure\Services\AppointmentService;
 use App\Infrastructure\Services\DoctorService;
 use App\Infrastructure\Services\PatientService;
 use App\Infrastructure\Services\PersonService;
 use App\Infrastructure\Services\ReceptionistService;
 use App\Infrastructure\Services\UserService;
+use App\Services\Contract\AppointmentServiceInterface;
+use App\Services\Contract\DoctorServiceInterface;
+use App\Services\Contract\PatientServiceInterface;
+use App\Services\Contract\PersonServiceInterface;
+use App\Services\Contract\ReceptionistServiceInterface;
+use App\Services\Contract\UserServiceInterface;
 use Illuminate\Support\ServiceProvider;
 
 class ServiceDIProvider extends ServiceProvider

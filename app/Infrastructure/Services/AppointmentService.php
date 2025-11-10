@@ -4,10 +4,10 @@ namespace App\Infrastructure\Services;
 
 use App\Classes\Const\AppointmentsStatus;
 use App\Classes\DTOs\Appointment\CreateAppointmentDTO;
-use App\Domain\Repositories\AppointmentRepositoryInterface;
-use App\Domain\Services\AppointmentServiceInterface;
 use App\Exceptions\AppointmentExistsException;
 use App\Models\Appointment;
+use App\Repositories\Contract\AppointmentRepositoryInterface;
+use App\Services\Contract\AppointmentServiceInterface;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 use Throwable;

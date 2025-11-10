@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Services;
+namespace App\Services\Contract;
 
 use App\Classes\DTOs\Appointment\CreateAppointmentDTO;
 use App\Models\Appointment;

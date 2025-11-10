@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Infrastructure\Persistence;
+namespace App\Repositories\Eloquent;
 
 
-use App\Domain\Repositories\AppointmentRepositoryInterface;
 use App\Models\Appointment;
-use App\Repositories\Eloquent\BaseRepository;
+use App\Repositories\Contract\AppointmentRepositoryInterface;
 
 class EloquentAppointmentRepository extends BaseRepository implements AppointmentRepositoryInterface
 {

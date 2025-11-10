@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Domain\Repositories;
+namespace App\Repositories\Contract;
 
 use App\Models\Appointment;
-use App\Repositories\Contract\BaseRepositoryInterface;
 
 interface AppointmentRepositoryInterface extends BaseRepositoryInterface
 {

@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Domain\Repositories;
+namespace App\Repositories\Contract;
 
 use App\Models\Person;
-use App\Repositories\Contract\BaseRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
 interface PersonRepositoryInterface extends BaseRepositoryInterface

@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Domain\Repositories;
-
-use App\Repositories\Contract\BaseRepositoryInterface;
+namespace App\Repositories\Contract;
 
 interface UserRepositoryInterface extends BaseRepositoryInterface
 {

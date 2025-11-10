@@ -2,10 +2,10 @@
 
 namespace App\Infrastructure\Services;
 
-use App\Domain\Services\UserServiceInterface;
 use App\Exceptions\UserExistsException;
 use App\Models\Person;
 use App\Models\User;
+use App\Services\Contract\UserServiceInterface;
 use Illuminate\Support\Facades\Hash;
 use Throwable;
 

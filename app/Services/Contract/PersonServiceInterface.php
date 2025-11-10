@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Domain\Services;
+namespace App\Services\Contract;
 
 use App\Classes\DTOs\Person\PersonDTO;
 use App\Models\Person;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 interface PersonServiceInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Services;
+namespace App\Services\Contract;
 
 use App\Models\Person;
 use App\Models\User;

@@ -4,11 +4,11 @@ namespace App\Infrastructure\Services;
 
 use App\Classes\Const\Role;
 use App\Classes\DTOs\Patient\CreatePatientDTO;
-use App\Domain\Repositories\PatientRepositoryInterface;
-use App\Domain\Services\PatientServiceInterface;
-use App\Domain\Services\PersonServiceInterface;
-use App\Domain\Services\UserServiceInterface;
 use App\Models\Patient;
+use App\Repositories\Contract\PatientRepositoryInterface;
+use App\Services\Contract\PatientServiceInterface;
+use App\Services\Contract\PersonServiceInterface;
+use App\Services\Contract\UserServiceInterface;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 use Throwable;

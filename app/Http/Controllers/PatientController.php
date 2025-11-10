@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Domain\Services\PatientServiceInterface;
 use App\Factories\CreatePatientDTOFactory;
 use App\Http\Requests\CreatePatientRequest;
 use App\Http\Resources\ErrorResource;
 use App\Http\Resources\PatientResource;
+use App\Services\Contract\PatientServiceInterface;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Throwable;

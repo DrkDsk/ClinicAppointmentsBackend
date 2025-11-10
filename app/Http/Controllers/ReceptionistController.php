@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Domain\Services\ReceptionistServiceInterface;
 use App\Factories\CreatePersonDTOFactory;
 use App\Http\Requests\CreateReceptionsRequst;
 use App\Http\Resources\ErrorResource;
 use App\Http\Resources\ReceptionistResource;
+use App\Services\Contract\ReceptionistServiceInterface;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Throwable;
 

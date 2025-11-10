@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Domain\Repositories\UserRepositoryInterface;
 use App\Http\Requests\CreateRoleRequest;
 use App\Http\Requests\GetRoleRequest;
 use App\Http\Resources\UserResource;
+use App\Repositories\Contract\UserRepositoryInterface;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class RoleController extends Controller

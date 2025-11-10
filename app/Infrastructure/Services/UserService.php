@@ -3,10 +3,10 @@
 namespace App\Infrastructure\Services;
 
 use App\Classes\Const\Role as RoleClass;
-use App\Domain\Repositories\UserRepositoryInterface;
-use App\Domain\Services\UserServiceInterface;
 use App\Models\Person;
 use App\Models\User;
+use App\Repositories\Contract\UserRepositoryInterface;
+use App\Services\Contract\UserServiceInterface;
 use Illuminate\Support\Facades\Hash;
 use Throwable;
 

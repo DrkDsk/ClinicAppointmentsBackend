@@ -4,11 +4,11 @@ namespace App\Infrastructure\Services;
 
 use App\Classes\Const\Role;
 use App\Classes\DTOs\Doctor\CreateDoctorDTO;
-use App\Domain\Repositories\DoctorRepositoryInterface;
-use App\Domain\Services\DoctorServiceInterface;
-use App\Domain\Services\PersonServiceInterface;
-use App\Domain\Services\UserServiceInterface;
 use App\Models\Doctor;
+use App\Repositories\Contract\DoctorRepositoryInterface;
+use App\Services\Contract\DoctorServiceInterface;
+use App\Services\Contract\PersonServiceInterface;
+use App\Services\Contract\UserServiceInterface;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 use Throwable;
