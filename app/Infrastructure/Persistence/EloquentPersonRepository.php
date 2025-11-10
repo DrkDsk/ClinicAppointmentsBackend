@@ -2,38 +2,27 @@
 
 namespace App\Infrastructure\Persistence;
 
-use App\Classes\DTOs\Person\PersonDTO;
-use App\Domain\Repositories\PersonRepository;
+use App\Domain\Repositories\PersonRepositoryInterface;
 use App\Models\Person;
 
+use App\Repositories\Eloquent\BaseRepository;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Pagination\LengthAwarePaginator;
-
-class EloquentPersonRepository implements PersonRepository
+class EloquentPersonRepository extends BaseRepository implements PersonRepositoryInterface
 {
-    public function create(PersonDTO $dto): Person
+
+    public function __construct(Person $model)
     {
-        return Person::create([
-            'name' => $dto->name,
-            'email' => $dto->email,
-            'birthday' => $dto->birthday->format('Y-m-d'),
-            'phone' => $dto->phone
-        ]);
+        parent::__construct($model);
     }
 
     public function existsByField(string $value, string $field = "phone"): ?Person
     {
-        return Person::where($field, $value)->first();
-    }
-
-
-    public function getAllPaginate(int $perPage): LengthAwarePaginator
-    {
-        return Person::paginate($perPage);
+        return $this->model->where($field, $value)->first();
     }
 
     public function search(string $query) : Collection
     {
-        return Person::search($query)->get();
+        return $this->model->search($query)->get();
     }
 }
+
