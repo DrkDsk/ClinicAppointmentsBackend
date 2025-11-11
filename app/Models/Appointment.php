@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class Appointment extends Model
 {
@@ -28,7 +29,14 @@ class Appointment extends Model
         return $this->belongsTo(Patient::class);
     }
 
-    public function typeAppointment(): BelongsTo {
-        return $this->belongsTo(TypeAppointment::class);
+    public function doctorProfile() : HasOneThrough {
+        return $this->hasOneThrough(
+            Person::class,
+            Doctor::class,
+            'id',
+            'id',
+            'doctor_id',
+            'person_id'
+        );
     }
 }

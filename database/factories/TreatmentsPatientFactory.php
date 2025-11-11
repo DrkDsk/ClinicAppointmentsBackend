@@ -4,14 +4,12 @@ namespace Database\Factories;
 
 use App\Classes\Const\TreatmentStatus;
 use App\Models\Appointment;
-use App\Models\Doctor;
-use App\Models\Patient;
 use App\Models\Treatment;
 use App\Models\TreatmentsPatient;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\TreatmentPatient>
+ * @extends Factory<TreatmentsPatient>
  */
 class TreatmentsPatientFactory extends Factory
 {
@@ -38,7 +36,7 @@ class TreatmentsPatientFactory extends Factory
         ];
     }
 
-    public function configure()
+    public function configure(): TreatmentsPatientFactory|Factory
     {
         return $this->afterCreating(function (TreatmentsPatient $treatmentsPatient) {
 

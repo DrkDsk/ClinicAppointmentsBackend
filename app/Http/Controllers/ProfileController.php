@@ -7,6 +7,7 @@ use App\Http\Resources\ErrorResource;
 use App\Http\Resources\ProfileResource;
 use App\Services\Contract\PersonServiceInterface;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Throwable;
 
@@ -17,7 +18,8 @@ class ProfileController extends Controller
     {
     }
 
-    public function search(SearchPeopleRequest $request) {
+    public function search(SearchPeopleRequest $request): AnonymousResourceCollection
+    {
         $query = $request->input('query');
 
         $persons = $this->personService->search($query);

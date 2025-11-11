@@ -3,11 +3,12 @@
 namespace Database\Factories;
 
 use App\Models\Payment;
+use App\Models\PaymentsTreatmentsAppointment;
 use App\Models\TreatmentsAppointment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PaymentsTreatmentsAppointment>
+ * @extends Factory<PaymentsTreatmentsAppointment>
  */
 class PaymentsTreatmentsAppointmentFactory extends Factory
 {
