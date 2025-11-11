@@ -5,9 +5,12 @@ namespace App\Infrastructure\Services;
 use App\Classes\Const\AppointmentsStatus;
 use App\Classes\DTOs\Appointment\CreateAppointmentDTO;
 use App\Exceptions\AppointmentExistsException;
+use App\Exceptions\ScheduleNotAvailableException;
 use App\Models\Appointment;
+use App\Models\Doctor;
 use App\Repositories\Contract\AppointmentRepositoryInterface;
 use App\Services\Contract\AppointmentServiceInterface;
+use Carbon\Carbon;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 use Throwable;
@@ -32,7 +35,7 @@ readonly class AppointmentService implements AppointmentServiceInterface
             );
 
             if ($appointment) {
-                $doctorName = $appointment->doctor->person->name;
+                $doctorName = $appointment->doctorProfile()->first()->getAttribute('name');
                 $messageException = "El doctor: $doctorName ya tiene una cita programada para $scheduledAt";
 
                 throw new AppointmentExistsException($messageException);
@@ -52,5 +55,44 @@ readonly class AppointmentService implements AppointmentServiceInterface
     public function getAllPaginated(int $perPage) : LengthAwarePaginator
     {
         return $this->appointmentRepository->paginate($perPage);
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function getAvailableAppointmentsSchedule(Doctor $doctor, string $strDate): array
+    {
+        $date = Carbon::parse($strDate);
+        $indexDay = $date->dayOfWeek;
+        $appointments = $doctor->appointments()->get()->pluck('scheduled_at');
+        $availableDates = $doctor->schedule()->where('weekday', $indexDay)->first();
+
+        throw_unless($availableDates, new ScheduleNotAvailableException("No hay espacio disponible"));
+
+        $startTime = explode(":", $availableDates->start_time);
+        $endTime = explode(":", $availableDates->end_time);
+
+        $startDate = $date->copy()->setTime($startTime[0], $startTime[1]);
+        $endDate = $date->copy()->setTime($endTime[0], $endTime[1]);
+
+
+        $hours = [];
+        $current = $startDate->copy();
+
+        while ($current->lte($endDate)) {
+
+            $isNearAppointment = $appointments->contains(function ($appointment) use ($current) {
+                $appointmentTime = Carbon::parse($appointment);
+                return abs($appointmentTime->diffInMinutes($current)) < 30;
+            });
+
+            if (!$isNearAppointment) {
+                $hours[] = $current->format('H:i');
+            }
+
+            $current->addMinutes(30);
+        }
+
+        return $hours;
     }
 }
