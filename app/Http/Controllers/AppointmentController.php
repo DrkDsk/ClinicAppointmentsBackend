@@ -21,9 +21,12 @@ class AppointmentController extends Controller
     public function store(CreateAppointmentRequest $request): ErrorResource|AppointmentResource
     {
         try {
+
             $appointmentData = CreateAppointmentDTOFactory::fromRequest($request);
 
             $appointment = $this->service->create($appointmentData);
+
+            $appointment->load(['doctor', 'patient', 'typeAppointment']);
 
             return new AppointmentResource($appointment);
         } catch (Throwable $exception) {
@@ -34,6 +37,7 @@ class AppointmentController extends Controller
     public function get(Request $request): AnonymousResourceCollection
     {
         $perPage = $request->input('perPage', 10);
+
         $appointments = $this->service->getAllPaginated($perPage);
 
         return AppointmentResource::collection($appointments);
@@ -41,6 +45,8 @@ class AppointmentController extends Controller
 
     public function show(Appointment $appointment): AppointmentResource
     {
+        $appointment->load(['doctor', 'patient', 'typeAppointment']);
+
         return new AppointmentResource($appointment);
     }
 }

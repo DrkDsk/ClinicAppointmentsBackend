@@ -43,8 +43,8 @@ class BaseRepository implements BaseRepositoryInterface
         return $instance ? $instance->delete() : false;
     }
 
-    public function paginate(int $perPage): LengthAwarePaginator
+    public function paginate(int $perPage, array $relations = []): LengthAwarePaginator
     {
-        return $this->model->paginate($perPage);
+        return $this->model->with($relations)->paginate($perPage);
     }
 }

@@ -39,4 +39,9 @@ class Appointment extends Model
             'person_id'
         );
     }
+
+    public function typeAppointment(): BelongsTo
+    {
+        return $this->belongsTo(TypeAppointment::class);
+    }
 }

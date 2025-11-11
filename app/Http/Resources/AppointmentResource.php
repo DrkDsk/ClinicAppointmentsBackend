@@ -17,9 +17,10 @@ class AppointmentResource extends JsonResource
         return [
             "id" => $this->id,
             "scheduled_at" => $this->scheduled_at,
-            "doctor" => new DoctorResource($this->doctor),
-            "patient" => new PatientResource($this->patient),
-            "typeAppointment" => new TypeAppointmentResource($this->typeAppointment)
+            "note" => $this->note,
+            "doctor" => DoctorResource::make($this->whenLoaded('doctor')),
+            "patient" => PatientResource::make($this->whenLoaded('patient')),
+            "typeAppointment" => typeAppointmentResource::make($this->whenLoaded('typeAppointment')),
         ];
     }
 }
