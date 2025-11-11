@@ -26,9 +26,7 @@ readonly class PersonService implements PersonServiceInterface
     {
         $person = $this->repository->existsByField(value: $personDTO->email, field: "email");
 
-        if ($person) {
-            throw new PersonExistException(message: "Este usuario ya se encuentra registrado");
-        }
+        throw_if($person, new PersonExistException(message: "Este usuario ya se encuentra registrado"));
 
         return DB::transaction(function () use ($personDTO) {
             return $this->repository->create($personDTO->toArray());
