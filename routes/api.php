@@ -24,6 +24,7 @@ Route::middleware(['auth:sanctum', "role_or_admin:$receptionistRole"])->group(fu
         Route::get('get', [DoctorController::class, 'get']);
         Route::post('create', [DoctorController::class, 'store']);
         Route::get('specialties', [SpecialtyController::class, 'get']);
+        Route::get('/{doctor}/available-times', [DoctorController::class, 'getAvailableTimes']);
     });
 
     Route::prefix('patients')->group(function () {
