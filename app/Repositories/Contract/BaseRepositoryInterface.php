@@ -8,7 +8,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 interface BaseRepositoryInterface
 {
-    public function paginate(int $perPage) : LengthAwarePaginator;
+    public function paginate(int $perPage, array $relations = []) : LengthAwarePaginator;
 
     public function all(): Collection;
 

@@ -53,7 +53,7 @@ readonly class DoctorService implements DoctorServiceInterface
 
     public function getAllPaginate(int $perPage): LengthAwarePaginator
     {
-        return $this->repository->paginate($perPage);
+        return $this->repository->paginate($perPage, ['person']);
     }
 }
 

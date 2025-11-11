@@ -54,7 +54,7 @@ readonly class AppointmentService implements AppointmentServiceInterface
 
     public function getAllPaginated(int $perPage) : LengthAwarePaginator
     {
-        return $this->appointmentRepository->paginate($perPage);
+        return $this->appointmentRepository->paginate($perPage, ['doctor', 'patient', 'typeAppointment']);
     }
 
     /**
